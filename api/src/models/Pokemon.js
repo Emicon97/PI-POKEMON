@@ -5,11 +5,10 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('pokemon', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
-      get () {
-        const fakemonId = `Fakemon ${this.getDataValue('id')}`;
-        return fakemonId ? fakemonId : '¡Este Fakemon aún no ha sido descubierto!';
+      set (value) {
+        this.setDataValue('id', `Fakemon ${value}`)
       }
     },
     name: {
@@ -17,7 +16,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     hp: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     attack: {
       type: DataTypes.INTEGER
@@ -34,5 +33,5 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.INTEGER
     }
-  });
+  }, {timestamps: false});
 };

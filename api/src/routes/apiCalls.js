@@ -2,8 +2,8 @@ const axios = require('axios');
 
 async function getApiPokemon (value, isCb) {
    var pokeData = [];
-   await axios.get(`https://pokeapi.co/api/v2/pokemon/${value}`)
-      .then(async apiPokemon => {
+   await axios(`https://pokeapi.co/api/v2/pokemon/${value}`)
+      .then( apiPokemon => {
          if (!isCb) {
             pokeData = {
                sprite: apiPokemon.data.sprites.other.dream_world.front_default,
@@ -22,23 +22,25 @@ async function getApiPokemon (value, isCb) {
                sprite: apiPokemon.data.sprites.other.dream_world.front_default,
                name: apiPokemon.data.name,
                types: apiPokemon.data.types.map(i => i.type.name)
-            }
+            };
          }
       })
-      .catch(`¡Ese Pokémon no existe! Pero podés crearlo como Fakemon aquí`);
+      .catch(() => {
+         throw new Error (`¡Ese Pokémon no existe! Pero podés crearlo como Fakemon aquí.`);
+      });
 
    return pokeData;
 }
 
-async function fullPokedex (surplus=39) {
-   let apiPokemon = await axios.get('https://pokeapi.co/api/v2/pokemon');
+async function fullPokedex (surplus=0) {
+   let apiPokemon = await axios('https://pokeapi.co/api/v2/pokemon');
    let secondApiPokemon = apiPokemon.data.next;
    secondApiPokemon = await axios.get(secondApiPokemon);
-
+   
    let apiDex = [];
 
    const first = apiPokemon.data.results.map(async poke => {
-      let firstHalfDex = await getApiPokemon(poke.name, true);
+      let firstHalfDex = await getApiPokemon(poke.name, 1);
       apiDex.push(firstHalfDex);
    });
 
@@ -54,9 +56,13 @@ async function fullPokedex (surplus=39) {
       await Promise.all(first, second);
       apiDex.length + surplus > 40 ? apiDex.length = apiDex.length - surplus : apiDex.length;
    }
-
-   
    return apiDex;
 }
 
-module.exports = {getApiPokemon, fullPokedex};
+async function checkPokemon (name) {
+   let pokemon = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      .catch(() => {return});
+   if (pokemon) return true;
+}
+
+module.exports = { getApiPokemon, fullPokedex, checkPokemon };

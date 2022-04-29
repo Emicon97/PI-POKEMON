@@ -1,8 +1,12 @@
-const { Pokemon, Type, Op } = require('../db');
+const { getTypes } = require('./typeCalls')
 const { Router } = require('express');
-const axios = require('axios');
 
 const router = Router();
 
+router.get('/', async (req, res) => {
+   const types = await getTypes();
+
+   res.json(types);
+});
 
 module.exports = router;

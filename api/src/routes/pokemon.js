@@ -1,6 +1,5 @@
-const { Pokemon, Type, Op } = require('../db');
 const { getApiPokemon, fullPokedex } = require('./apiCalls');
-const { getDbPokemon } = require('./dbCalls');
+const { getDbPokemon, getDbDex, postPokemon } = require('./dbCalls');
 const { json, Router } = require('express');
 
 const router = Router();
@@ -10,55 +9,44 @@ router.get('/', async (req, res) => {
    try {
       let { name } = req.query;
       if (name) {
-         const pokeData = await getApiPokemon(name);
-         res.json(pokeData);
+         name = name.toLowerCase()
+         let data = await getDbPokemon(name, 'name');
+         data ? data : data = await getApiPokemon(name);
+         res.json(data);
       } else {
-         const apiDex = await fullPokedex();
-         res.json(apiDex);
+         const [ dbDex, surplus ] = await getDbDex();
+         const apiDex  = await fullPokedex(surplus);
+         
+         var fakeDex = [];
+         dbDex ? fakeDex = [ ...dbDex, ...apiDex ] : fakeDex = [apiDex];
+         res.json(fakeDex);
       }
    } catch (err) {
-      console.log(err);
+      res.status(404).send(err.message);
    }
 });
 
 router.get('/:idPokemon', async (req, res) => {
    try {
       let { idPokemon } = req.params;
+      let pokeData;
+      idPokemon.includes('Fakemon') ? 
+      pokeData = await getDbPokemon(idPokemon, 'id') : 
+      pokeData = await getApiPokemon(idPokemon);
 
-      const pokeData = await getApiPokemon(idPokemon);
-      
       res.json(pokeData);
    } catch (err) {
-      console.log(err);
+      res.send(err.message);
    }
 });
 
 router.post('/', async (req, res) => {
    try {
-      let { id, name, hp, attack, defense, speed, height, weight } = req.body;
-      console.log(id)
-      // const [ pokemon, created ] = await Pokemon.findOrCreate({
-      //    where: {
-      //       name: name
-      //    },
-      //    default: {
-      //       id: id,
-      //       hp,
-      //       attack,
-      //       defense,
-      //       speed,
-      //       height,
-      //       weight
-      //    }
-      // })
-
-      // console.log(pokemon)
-      // console.log(created)
-
-      // res.send(pokemon);
-
+      var { name, hp, attack, defense, speed, height, weight, types } = req.body;
+      let pokemon = await postPokemon(name, hp, attack, defense, speed, height, weight, types);
+      res.json(pokemon);
    } catch (err) {
-      console.log(err);
+      res.send(err.message);
    }
 });
 

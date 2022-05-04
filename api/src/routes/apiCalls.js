@@ -6,7 +6,7 @@ async function getApiPokemon (value, isCb) {
       .then( apiPokemon => {
          if (!isCb) {
             pokeData = {
-               sprite: apiPokemon.data.sprites.other.dream_world.front_default,
+               sprite: apiPokemon.data.sprites.other['official-artwork'].front_default,
                name: apiPokemon.data.name,
                types: apiPokemon.data.types.map(i => i.type.name),
                id: apiPokemon.data.id,
@@ -19,13 +19,15 @@ async function getApiPokemon (value, isCb) {
             };
          } else {
             pokeData = {
-               sprite: apiPokemon.data.sprites.other.dream_world.front_default,
+               sprite: apiPokemon.data.sprites.other['official-artwork'].front_default,
                name: apiPokemon.data.name,
-               types: apiPokemon.data.types.map(i => i.type.name)
+               types: apiPokemon.data.types.map(i => i.type.name),
+               id: apiPokemon.data.id
             };
          }
       })
       .catch(() => {
+         if (isCb) throw new Error (`¡Vaya! ¡Parece que tu Pokédex está averiada!`);
          throw new Error (`¡Ese Pokémon no existe! Pero podés crearlo como Fakemon aquí.`);
       });
 
@@ -39,21 +41,25 @@ async function fullPokedex (surplus=0) {
    
    let apiDex = [];
 
-   const first = apiPokemon.data.results.map(async poke => {
-      let firstHalfDex = await getApiPokemon(poke.name, 1);
-      apiDex.push(firstHalfDex);
-   });
+   const first = await Promise.all(
+      apiPokemon.data.results.map(async pokemon => {
+        let firstDexHalf = await getApiPokemon(pokemon.name, true);
+        return firstDexHalf;
+      })
+    );
 
    if (surplus >= 20) {
-      await Promise.all(first);
+      apiDex = [...first];
       apiDex.length + surplus > 40 ? apiDex.length = apiDex.length - surplus + 20 : apiDex.length;
    } else {
-      const second = secondApiPokemon.data.results.map(async poke => {
-         let secondHalfDex = await getApiPokemon(poke.name, true);
-         apiDex.push(secondHalfDex);
-      });
+      const second = await Promise.all(
+         secondApiPokemon.data.results.map(async pokemon => {
+            let secondHalfDex = await getApiPokemon(pokemon.name, true);
+            return secondHalfDex;
+         })
+      );
 
-      await Promise.all(first, second);
+      apiDex = [...first, ...second];
       apiDex.length + surplus > 40 ? apiDex.length = apiDex.length - surplus : apiDex.length;
    }
    return apiDex;

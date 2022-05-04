@@ -1,4 +1,4 @@
-const { Pokemon, Type } = require('../db');
+const { Pokemon } = require('../db');
 const { checkPokemon } = require('./apiCalls');
 const { getFakeTypes, typeManager } = require('./typeCalls');
 
@@ -25,16 +25,18 @@ async function getDbDex () {
 
    let data = [];
    for (let i = 1; i < fakes+1; i++) {
-      fakemon = await await Pokemon.findByPk(`Fakemon ${i}`);
+      fakemon = await Pokemon.findByPk(`Fakemon ${i}`);
       fakemon = await getFakeTypes(fakemon);
       fakemon = {
          sprite: fakemon.sprite,
          name: fakemon.name,
-         types: fakemon.dataValues.types
+         types: fakemon.dataValues.types,
+         id: fakemon.id
       }
       data.push(fakemon);
    }
 
+   data.length > 20 ? data.length = 20 : data.length;
    return [ data, fakes ];
 }
 

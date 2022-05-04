@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
          res.json(fakeDex);
       }
    } catch (err) {
-      res.status(404).send(err.message);
+      res.status(404).json(err.message);
    }
 });
 
@@ -36,7 +36,7 @@ router.get('/:idPokemon', async (req, res) => {
 
       res.json(pokeData);
    } catch (err) {
-      res.send(err.message);
+      res.json(err.message);
    }
 });
 
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
       let pokemon = await postPokemon(name, hp, attack, defense, speed, height, weight, types);
       res.json(pokemon);
    } catch (err) {
-      res.send(err.message);
+      res.json(err.message);
    }
 });
 

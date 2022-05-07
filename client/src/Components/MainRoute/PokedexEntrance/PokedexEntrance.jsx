@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Entrance, LinkBox, Name, ImgError, Types, Type } from './Styles';
+import { Entrance, LinkBox, Err } from './Entrance';
+import { Name, ImgError, Types, Type } from './Content';
 
-const PokedexEntrance = ({ sprite, name, types, id }) => {
-   name = name[0].toUpperCase() + name.slice(1);
+const PokedexEntrance = ({ sprite, name, types, id, lesserError }) => {
    return (
       <Entrance>
-         <Link to={`/${id}`}>
+         {lesserError ? <Err><Name>{lesserError}</Name></Err> :
+         <Link to={`/pokemon/${id}`}>
             <LinkBox>
                <Name>{name}</Name>
                {sprite ? <img src={sprite} alt='' width='115em' height='115em'/> :
@@ -13,14 +14,13 @@ const PokedexEntrance = ({ sprite, name, types, id }) => {
                }
                <Types>
                   {types.map(type => {
-                     let isEven;
-                     type === types[1] ? isEven = true : isEven = false;
                      type = type[0].toUpperCase() + type.slice(1);
-                     return <Type key={type} isEven={isEven} name={type}>{type}</Type>;
+                     return <Type key={type} name={type}>{type}</Type>;
                   })}
                </Types>
             </LinkBox>
          </Link>
+         }
       </Entrance>
    );
 };

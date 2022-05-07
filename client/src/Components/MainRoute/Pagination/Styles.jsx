@@ -30,7 +30,7 @@ const Index = styled.button`
     -1px 1px 0 #000, 1px -1px 0 #000;
 
    ${props => props.isSelected ? 'transition: all .4s ease-out; background-color: white; color: rgb(218, 49, 24); font-size: large; font-weight: bold; padding: 2.1rem;' :
-         '&:hover {transition: .3s ease-out; padding: 1.9rem; margin-left: 2rem; margin-right: 2rem; background: #371e1e};'};
+         '&:hover {transition: .3s ease-out; padding: 1.9rem; margin-left: 2rem; margin-right: 2rem; background-color: #371e1e};'};
 
     &:active {
       transition: .2s;

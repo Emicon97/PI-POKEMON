@@ -22,7 +22,8 @@ async function getApiPokemon (value, isCb) {
                sprite: apiPokemon.data.sprites.other['official-artwork'].front_default,
                name: apiPokemon.data.name,
                types: apiPokemon.data.types.map(i => i.type.name),
-               id: apiPokemon.data.id
+               id: apiPokemon.data.id,
+               attack: apiPokemon.data.stats[1].base_stat
             };
          }
       })
@@ -34,7 +35,7 @@ async function getApiPokemon (value, isCb) {
    return pokeData;
 }
 
-async function fullPokedex (surplus=0) {
+async function fullPokedex (surplus) {
    let apiPokemon = await axios('https://pokeapi.co/api/v2/pokemon');
    let secondApiPokemon = apiPokemon.data.next;
    secondApiPokemon = await axios.get(secondApiPokemon);
@@ -48,9 +49,8 @@ async function fullPokedex (surplus=0) {
       })
     );
 
-   if (surplus >= 20) {
+   if (surplus === 20) {
       apiDex = [...first];
-      apiDex.length + surplus > 40 ? apiDex.length = apiDex.length - surplus + 20 : apiDex.length;
    } else {
       const second = await Promise.all(
          secondApiPokemon.data.results.map(async pokemon => {

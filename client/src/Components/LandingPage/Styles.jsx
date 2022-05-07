@@ -38,6 +38,8 @@ const Button = styled.button`
    &:active {
       transition: .3s;
       background-color: black;
+      font-weight: bold;
+      color: rgb(208, 0, 0)
    }
    transition: .3s;
 

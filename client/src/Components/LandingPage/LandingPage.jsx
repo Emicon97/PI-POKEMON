@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 import { Background, Button } from "./Styles";
 
-
 const LandingPage = () => {
    return (
       <Background>

@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Paginator, Index } from "./Styles";
 
-import { pageSetter } from "../../Redux/actions";
+import { pageSetter } from '../../../Redux/actions';
 
 const Pagination = () => {
    const dispatch = useDispatch();
-   const [ pages, setPages ] = useState([1, 1, 12]);
+   const page = useSelector(state => state.page);
+   const [ pages, setPages ] = useState(page);
    const selector = useSelector(state => state.pokedex);
 
    useEffect(() => {
       dispatch(pageSetter(pages));
+      return(dispatch(pageSetter(pages)));
       // eslint-disable-next-line
    }, [pages]);
 

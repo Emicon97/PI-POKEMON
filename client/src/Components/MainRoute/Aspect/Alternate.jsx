@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Error = styled.div`
+   user-select: none;
    display: flex;
    margin-top: 2rem;
    justify-content: center;
@@ -22,6 +23,7 @@ const Error = styled.div`
       -1px -1px 0 rgb(248, 221, 221), -1px 1px 0 rgb(248, 221, 221), 1px -1px 0 rgb(248, 221, 221);
 `;
 const Loader = styled.div`
+   user-select: none;
    display: flex;
    margin-top: 2rem;
    justify-content: center;

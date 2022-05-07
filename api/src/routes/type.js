@@ -5,7 +5,6 @@ const router = Router();
 
 router.get('/', async (req, res) => {
    const types = await getTypes();
-
    res.json(types);
 });
 

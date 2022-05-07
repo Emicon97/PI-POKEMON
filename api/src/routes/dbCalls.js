@@ -4,6 +4,7 @@ const { getFakeTypes, typeManager } = require('./typeCalls');
 
 async function getDbPokemon (value, request) {
    if (request === 'id') {
+      value = idFixer(value);
       var data = await Pokemon.findByPk(value);
       if(!data) throw new Error (`¡No tenemos esa entrada en nuesta Fakedex! Podés crear Fakemon aquí`);
    }
@@ -65,6 +66,12 @@ async function postPokemon (name, hp, attack, defense, speed, height, weight, ty
    
    if (types) fakemon = await typeManager(fakemon, types);
    return fakemon;
+}
+
+function idFixer (id) {
+   if (id.includes('%20')) return id.replace('%20', ' ');
+   else if (id.includes('+')) return id.replace('+', ' ');
+   return id;
 }
 
 module.exports = { getDbPokemon, postPokemon, getDbDex };

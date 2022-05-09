@@ -53,17 +53,34 @@ const Select = styled.select`
 
   width: 10rem;
   height: 2.3rem;
+  border-radius: 6%;
   margin-left: 3rem;
   margin-right: 3rem;
 
-  background-color: DodgerBlue;
-  color: #e8c64b;
   font-weight: bold;
   text-align: center;
   border:1px solid black;
+
+  outline: 2px solid black;
+  border: 1px solid white;
+  
+  color: rgb(208, 0, 0);
+  background-color: #000;  
+  text-shadow: 1px 0 0 #000, -1px 0 0 #000,
+    0 1px 0 #000, 0 -1px 0 #000, 1px 1px 0 #000,
+    -1px -1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000;
+    
+  ${props => props.isOn ? 'transition: .3s;  color: rgb(218, 49, 24); background-color: white;' :
+    'transition: .6s; background-color: black; color: rgb(208, 0, 0); font-weight: bolder;'};
+
+  &:hover {
+    transition: .6s;
+    ${props => props.isOn ? 'width: 11rem; height: 2.6rem; background-color: rgb(237, 65, 65); color: #d7c5a4;' :
+      'width: 11rem; height: 2.6rem; background-color: #681717; color: #ffcd44;' };
+  };
 `;
-const Option = styled.option`
-  background-color: dodgerblue;
+const Searchbar = styled.input`
+  
 `;
 
-export { Buttons, Button, Select, Option };
+export { Buttons, Button, Select, Searchbar };

@@ -1,9 +1,8 @@
-import { GET_POKEDEX, GET_TYPES, SORT, FILTER, PAGE_SETTER, GET_POKEMON, GET_PREV, GET_NEXT, LOADING, EMPTY_CARD, ERROR_HANDLER } from './actions';
+import { GET_POKEDEX, GET_TYPES, POST_FAKEMON, SORT, FILTER, PAGE_SETTER, GET_POKEMON, GET_PREV, GET_NEXT, LOADING, EMPTY_CARD, ERROR_HANDLER, CLEAR_MESSAGES } from './actions';
 
 const initialState = {
    pokedex: [],
    backupdex: [],
-   sortState: 'default',
    types: [],
    pokemon: {},
    prevPokemon: {},
@@ -11,7 +10,7 @@ const initialState = {
    page: [1, 1, 12],
    loading: true,
    error: '',
-   lesserError: ''
+   success: ''
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -28,74 +27,27 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ...state,
             types: payload
          };
+      case POST_FAKEMON:
+         return {
+            ...state,
+            success: payload,
+            loading: false
+         }
       case PAGE_SETTER:
          return {
             ...state,
             page: payload
          };
       case SORT:
-         if (!payload) return {...state};
-         let sorted = [];
-         let err = state.lesserError;
-         if (payload === '6') {
-            sorted = state.backupdex;
-            err = '';
-         } else if (payload === '2') {
-            sorted = state.pokedex.slice().sort((a, b) => {
-               if (a.name < b.name) return -1;
-               if (a.name > b.name) return 1;
-               return 0;
-            });
-         } else if (payload === '3') {
-            sorted = state.pokedex.slice().sort((a, b) => {
-               if (a.name > b.name) return -1;
-               if (a.name < b.name) return 1;
-               return 0; 
-            });
-         } else if (payload === '4') {
-            sorted = state.pokedex.slice().sort((a, b) => {
-               return b.attack-a.attack;
-            });
-         } else if (payload === '5') {
-            sorted = state.pokedex.slice().sort((a, b) => {
-               return a.attack-b.attack;
-            });
-         }
          return {
                ...state,
-               pokedex: sorted,
-               sortState: payload,
-               lesserError: err
-
+               pokedex: payload
             };
       case FILTER:
-         if (!payload) return {...state};
-         let filtered = [];
-         let lesserError = '';
-         if (payload === 3) {
-            filtered = state.backupdex.filter(pokemon => {
-               return typeof pokemon.id !== 'string';
-            });
-         } else if (payload === 2) {
-            filtered = state.backupdex.filter(pokemon => {
-               return typeof pokemon.id === 'string';
-            });
-         } else {
-            filtered = state.pokedex.filter(pokemon => {
-               if (pokemon.types) {
-                  for (let x of pokemon.types) {
-                     if (x === payload) return pokemon;
-                  }
-               }
-               return false;
-            });
-         }
-         if (!filtered.length) lesserError = '¡No hay Pokémon registrados de ese tipo! Pero podés crear uno aquí.';
          return {
             ...state,
-            pokedex: filtered,
-            page: [1, 1, 12],
-            lesserError
+            pokedex: payload,
+            page: [1, 1, 12]
          };
       case GET_POKEMON:
          return {
@@ -115,7 +67,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
             nextPokemon: payload,
             loading: false
          };
-      case LOADING:
+         case LOADING:
          return {
             ...state,
             loading: true
@@ -130,8 +82,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       case ERROR_HANDLER:
          return {
             ...state,
-            error: payload
+            error: payload,
+            loading: false
          };
+      case CLEAR_MESSAGES:
+         return {
+            ...state,
+            loading: false,
+            error: '',
+            success: ''
+         }
       default:
          return {...state};
    }

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_POKEDEX = 'GET_POKEDEX';
 export const GET_TYPES = 'GET_TYPES';
+export const POST_FAKEMON = 'POST_FAKEMON';
 export const SORT = 'SORT';
 export const FILTER =  'FILTER';
 export const PAGE_SETTER = 'PAGE_SETTER';
@@ -11,6 +12,7 @@ export const GET_NEXT = 'GET_NEXT';
 export const LOADING = 'LOADING';
 export const EMPTY_CARD = 'EMPTY_CARD';
 export const ERROR_HANDLER = 'ERROR_HANDLER';
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 
 export function getPokedex () {
    return dispatch => {
@@ -33,6 +35,19 @@ export function getTypes () {
             payload: response.data
          }))
          .catch (error => dispatch ({
+            type: ERROR_HANDLER,
+            payload: error.response.data
+         }));
+   };
+};
+export function postFakemon (payload) {
+   return dispatch => {
+      return axios.post('http://localhost:3001/pokemons', payload)
+         .then (response => dispatch({
+            type: POST_FAKEMON,
+            payload: response.data
+         }))
+         .catch (error => dispatch({
             type: ERROR_HANDLER,
             payload: error.response.data
          }));
@@ -94,3 +109,8 @@ export function emptyCard (payload) {
       payload
    };
 };
+export function clearMessages () {
+   return {
+      type: CLEAR_MESSAGES
+   }
+}

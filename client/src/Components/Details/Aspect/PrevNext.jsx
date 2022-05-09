@@ -7,7 +7,9 @@ const PrevNext = styled.div`
    
    flex-direction: column;
    align-items: center;
-   justify-content: space-around;
+   justify-content: center;
+   overflow: hidden;
+   flex-wrap: wrap;
 
    height: 15rem;
    width: 15rem;
@@ -41,12 +43,15 @@ const PrevNext = styled.div`
       margin-right: 2rem;
       padding: 2rem;
    };
-   a:active {
+   &:active {
       text-decoration: none;
+      transition: .3s;
+      ${props => props.order === 'isPrev' ? 'margin-left: 5rem;' : 'margin-right: 5rem;'}
+      height: 20rem;
+      width: 20rem;
    };
    
    transition: 1.5s ease-out;
-   transition-delay: 200ms;
 
    flex-wrap: wrap;
 

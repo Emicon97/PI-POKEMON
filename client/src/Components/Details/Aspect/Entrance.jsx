@@ -37,8 +37,8 @@ const Entrance = styled.div`
       transition: all 0.6s ease-out;
       transition-delay: 0.1s;
       margin-bottom: 4rem;
-      margin-left: 15rem;
-      margin-right: 15rem;
+      margin-left: 10rem;
+      margin-right: 10rem;
       padding: 2rem;
    };
    a:active {

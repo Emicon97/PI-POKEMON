@@ -33,7 +33,7 @@ const NextEntrance = ({id}) => {;
    }
    
    return (
-      <PrevNext>
+      <PrevNext order={'isNext'}>
          {loading ? <LinkBox><Name>Identificando Pokémon...</Name></LinkBox> :
             <Link to={`/pokemon/${id}`} >
                <LinkBox>

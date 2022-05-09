@@ -8,10 +8,6 @@ import { ImgError, Name, Types, Type } from "../Aspect/SideContent";
 import { getPrev } from "../../../Redux/actions";
 
 const PrevEntrance = ({id}) => {
-   if (id === 0) {
-      id = 'Fakemon 2';
-   }
-
    const dispatch = useDispatch();;
    const selector = useSelector(state => state.prevPokemon);
    const [ loading, setLoading ] = useState(true);
@@ -37,7 +33,7 @@ const PrevEntrance = ({id}) => {
    }
 
    return (
-      <PrevNext>
+      <PrevNext order={'isPrev'}>
          {loading ? <LinkBox><Name>Identificando Pokémon...</Name></LinkBox> :
             <Link to={`/pokemon/${id}`}>
                <LinkBox>

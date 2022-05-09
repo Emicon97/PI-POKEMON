@@ -14,6 +14,16 @@ const Background = styled.div`
    
    align-items: center;
    justify-content: center;
+   flex-direction: column;
+`;
+const Div = styled.div`
+   display: flex;
+
+   align-items: center;
+   justify-content: center;
+   flex-direction: row;
+
+   margin-bottom: 1.5rem;
 `;
 
-export { Background };
+export { Background, Div };

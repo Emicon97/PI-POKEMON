@@ -31,7 +31,7 @@ const Pagination = () => {
       setPages([index, firstPokemon, lastPokemon]);
    };
 
-   const isSelected = index => {
+   const isSelected = (index) => {
       if (pages[0] === index) return true;
       return false;
    };

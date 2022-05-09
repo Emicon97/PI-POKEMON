@@ -64,6 +64,11 @@ const Type = styled.div`
       props.name === 'Flying' ? 'background-color: cornflowerblue; border: 3px solid rgb(49, 78, 131); color: rgb(200, 214, 240);' :
       props.name === 'Bug' ? 'background-color: rgb(82, 138, 35); border: 3px solid rgb(50, 88, 18); color: rgb(165, 211, 127)' :
       props.name === 'Poison' ? 'background-color: purple; border: 3px solid rgb(49, 7, 49); color: rgb(174, 78, 174)' :
+      props.name === 'Normal' ? 'background-color: #bcbcbc; border 3px solid #7d7d7d; color: #888888;' :
+      props.name === 'Electric' ? 'background-color: #ffcc00; border 3px solid #ab982c; color: #ad9637;' :
+      props.name === 'Ground' ? 'background-color: #ceb659; border 3px solid #a49b67; color: #8a7f4a;' :
+      props.name === 'Fairy' ? 'background-color: #fd9afd; border: 3px solid rgb(188, 87, 159); color: rgb(239, 220, 234)' :
+      props.name ==='Dragon' ? 'background-color: rgb(35, 35, 169); border: 3px solid rgb(89, 24, 138); color: #b30e0e ' :
       'background-color: #0336ff; border: 3px solid #151552; color: #ddb100; font-size: small; width: 11rem; height: 2.2rem;'
    };
 

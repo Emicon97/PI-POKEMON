@@ -1,29 +1,37 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import PokedexEntrance from '../PokedexEntrance/PokedexEntrance.jsx';
 import Pagination from '../Pagination/Pagination.jsx';
 
 import { Container, Background, Grid } from "../Aspect/Body.jsx";
-import { Buttons, Button, Select, Option } from '../Aspect/Buttons.jsx';
+import { Buttons, Button, Select, Searchbar } from '../Aspect/Buttons.jsx';
 import { Error, Loader } from '../Aspect/Alternate.jsx';
 
-import { getPokedex, getTypes, getSorted, getFiltered, loadingTrue } from "../../../Redux/actions";
-import { emptyCard } from './../../../Redux/actions';
+import { getPokedex, getTypes, getSorted, getFiltered, loadingTrue, emptyCard } from "../../../Redux/actions";
+
+import { sortManager, filterManager } from '../FilterAndSort/filterAndSort';
 
 const MainRoute = () => {
    const dispatch = useDispatch();
+
    const pokedex = useSelector(state => state.pokedex);
+   const backupdex = useSelector(state => state.backupdex);
    const types = useSelector(state => state.types);
    const pages = useSelector(state => state.page);
    const loading = useSelector(state => state.loading);
    const error = useSelector(state => state.error);
-   const lesserError = useSelector(state => state.lesserError);
-   const [ sorter, setSorter ] = useState(0);
-   const [ filtering, setFiltering ] = useState(0);
+
+   const [ sorter, setSorter ] = useState();
+   const [ filters, setFilters ] = useState();
+   const [ changer, setChanger ] = useState(backupdex);
+
    const [ pok, setPok ] = useState(true);
    const [ fak, setFak ] = useState(true);
    const [ tod, setTod ] = useState(true);
+   const [ fil, setFil ] = useState(false);
+   const [ sor, setSor ] = useState(false);
 
    useEffect(() => {
       dispatch(getPokedex());
@@ -34,44 +42,57 @@ const MainRoute = () => {
    }, []);
 
    useEffect(() => {
-      dispatch(getSorted(sorter));
-      setSorter(0);
+      dispatch(getSorted(changer));
       // eslint-disable-next-line
    }, [sorter]);
 
    useEffect(() => {
-      dispatch(getFiltered(filtering));
+      dispatch(getFiltered(changer));
       // eslint-disable-next-line
-   }, [filtering]);
-
-   const sortManager = (type) => {
-      setSorter(type);
-      if (type === '6') {setTod(true); setPok(true); return setFak(true)};
+   }, [filters]);
+   
+   const eventManager = (event, type) => {
+      event.preventDefault();
+      event = event.target.value;
+      if (type === 'filter') {
+         filtering(event.toLowerCase());
+      } else {
+         sorting(event);
+      }
    };
 
-   const eventManager = (e, type) => {
-      e.preventDefault();
-      e = e.target.value
-      type === 'filter' ? filterManager(e.toLowerCase()) :
-         sortManager(e);
+   const sorting = type => {
+      if (type === 'default') {
+         setFil(false);
+         setSor(false);
+         setChanger(sortManager(type, backupdex));
+         sorter ? setSorter(false) : setSorter(true);
+         setPok(true); 
+         setFak(true);
+         return setTod(true);
+      }
+      if (pokedex.length) {
+         sorter ? setSorter(false) : setSorter(true);
+         setChanger(sortManager(type, pokedex));
+         setSor(type);
+      }
    };
 
-   const filterManager = (type) => {
-      setFiltering(type);
-      
-      if (type === 1) {
+   const filtering = type => {
+      if (type === 'pokemon') {
          setPok(true);
+         setFak(false);
          setTod(false);
-         return setFak(false)
-      };
-      if (type === 2) {
+      } else if (type === 'fakemon') {
+         setPok(false);
          setFak(true);
          setTod(false);
-         return setPok(false)
+      } else {
+         setTod(false)
+         setFil(type);
       }
-      else  {
-         return setTod(false);
-      }
+      setChanger(filterManager(type, [pok, fak, fil], backupdex, sor));
+      filters ? setFilters(false) : setFilters(true);
    };
    
    if (error) {
@@ -90,45 +111,44 @@ const MainRoute = () => {
             {loading ? <Loader>Completando tu Pokédex...</Loader> :
             <>
             <Buttons>
-               <Button isSpecial={true} isOn={true}>Crear Pokémon</Button>
+               <Link to={'/creation'}>
+                  <Button isSpecial={true} isOn={true}>Crear Pokémon</Button>
+               </Link>
             </Buttons>
             <Buttons>
-               <Select name="typeFilter" value="" onChange={value => eventManager(value, 'filter')}>
-                  <option>Filtrar por tipo</option>
-                  {types && types.map(type => {
-                     type.name = type.name[0].toUpperCase() + type.name.slice(1);
-                     return (
-                        <Option key={type.name} value={type.name}>{type.name}</Option>
-                     );
-                  })}
+               <Select name="typeFilter" isOn={fil} value="" onChange={value => eventManager(value, 'filter')}>
+                     <option value="0" hidden>Filtrar por tipo</option>
+                     {types && types.map(type => {
+                        type = type.name[0].toUpperCase() + type.name.slice(1);
+                        return (
+                           <option key={type} value={type}>{type}</option>
+                        );
+                     })}
                </Select>
-               <Button onClick={() => filterManager(3)} isOn={pok}>Pokémon</Button>
-               <Button isSpecial={true} onClick={() => sortManager('6')} isOn={tod}>¡Atrapalos ya!</Button>
-               <Button onClick={() => filterManager(2)} isOn={fak}>Fakemon</Button>
-               <Select name="sort" value="" onChange={value => eventManager(value, 'sort')}
-                  filterOption={(option) => option.value !== "0"}>
-                     <Option key={0} value="0" hidden>Ordenar</Option>
-                     <Option key={1} value="6">Por defecto</Option>
-                     <Option key={2} value ="2">Alfabéticamente</Option>
-                     <Option key={3} value="3">De la Z a la A</Option>
-                     <Option key={4} value ="4">De más fuerte a más débil</Option>
-                     <Option key={5} value="5">De más débil a más fuerte</Option>
+               <Button onClick={() => filtering('pokemon')} isOn={pok}>Pokémon</Button>
+               <Button isSpecial={true} onClick={() => sorting('default')} isOn={tod}>¡Atrapalos ya!</Button>
+               <Button onClick={() => filtering('fakemon')} isOn={fak}>Fakemon</Button>
+               <Select name="sort" value="" isOn={sor} onChange={value => eventManager(value, 'sort')}>
+                     <option key={0} value="0" hidden>Ordenar</option>
+                     <option key={1} value ="aToZ">Alfabéticamente</option>
+                     <option key={2} value="zToA">De la Z a la A</option>
+                     <option key={3} value ="maxToMin">De más fuerte a más débil</option>
+                     <option key={4} value="minToMax">De más débil a más fuerte</option>
                </Select>
             </Buttons>
             <Grid>
-               {lesserError ? <PokedexEntrance lesserError={lesserError}></PokedexEntrance> :
-                  pokedex && pokedex.slice(pages[1]-1, pages[2]).map(pokemon => {
-                     pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-                     return (
-                        <PokedexEntrance
-                           key = {pokemon.id}
-                           sprite = {pokemon.sprite}
-                           name = {pokemon.name}
-                           types = {pokemon.types ? pokemon.types : ['¡Este Fakemon no tiene tipos!']}
-                           id = {pokemon.id}
-                        />
-                     );
-                  })}
+               {pokedex.length ? pokedex.slice(pages[1]-1, pages[2]).map(pokemon => {
+                  pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+                  return (
+                     <PokedexEntrance
+                        key = {pokemon.id}
+                        sprite = {pokemon.sprite}
+                        name = {pokemon.name}
+                        types = {pokemon.types ? pokemon.types : ['¡Este Fakemon no tiene tipos!']}
+                        id = {pokemon.id}
+                     />
+                  );
+               }) : <PokedexEntrance lesserError={true}/>}
             </Grid>
             <Pagination></Pagination>
             </>           

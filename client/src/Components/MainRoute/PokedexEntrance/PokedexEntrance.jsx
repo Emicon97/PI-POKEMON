@@ -5,7 +5,7 @@ import { Name, ImgError, Types, Type } from './Content';
 const PokedexEntrance = ({ sprite, name, types, id, lesserError }) => {
    return (
       <Entrance>
-         {lesserError ? <Err><Name>{lesserError}</Name></Err> :
+         {lesserError ? <Err><Name>'¡No hay Pokémon registrados de ese tipo! Pero podés crear uno aquí.'</Name></Err> :
          <Link to={`/pokemon/${id}`}>
             <LinkBox>
                <Name>{name}</Name>

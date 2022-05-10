@@ -198,7 +198,7 @@ const Creator = () => {
          <Form isLoading={loading} onSubmit={e => handleSubmit(e)}>
          {loading === true ? <Span isLoading={true} >Registrando datos</Span> :
          <>
-            <Div>¡CREÁ TU PROPIO POKÉMON!</Div>
+            <Div isTitle={true} >¡CREÁ TU PROPIO POKÉMON!</Div>
             <Label>Nombre</Label>
             <Div>
             <Input type="text" value={req.name} name="name" hasErrors={go.name}

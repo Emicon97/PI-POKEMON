@@ -36,6 +36,7 @@ const Label = styled.label`
    display: flex;
    justify-content: center;
    margin-bottom: .2rem;
+   font-weight: 501;
    `;
 const Input = styled.input`
    opacity: 0.8;
@@ -74,6 +75,9 @@ const Div = styled.div`
    
    max-width: 50rem;
    flex-wrap: auto;
+
+   ${props => props.isTitle ? 'font-weight: bold; color: #f0f036; text-shadow: 2px 0 0 rgb(0, 42, 255), -2px 0 0 rgb(0, 42, 255), 0 2px 0 rgb(0, 42, 255), 0 -2px 0 rgb(0, 42, 255), 2px 2px 0 rgb(0, 42, 255), -2px -2px 0 rgb(0, 42, 255), -2px 2px 0 rgb(0, 42, 255), 2px -2px 0 rgb(0, 42, 255);' :
+      null}
 `;
 const Span = styled.span`
    margin-left: .5rem;

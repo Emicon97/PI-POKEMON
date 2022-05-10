@@ -25,7 +25,7 @@ const MainRoute = () => {
    const lesserError = useSelector(state => state.lesserError);
    const error = useSelector(state => state.error);
 
-   const [ searcher, setSearcher ] = useState();
+   const [ searcher, setSearcher ] = useState('');
    const [ sorter, setSorter ] = useState();
    const [ filters, setFilters ] = useState();
    const [ changer, setChanger ] = useState(backupdex);
@@ -64,6 +64,8 @@ const MainRoute = () => {
       if (searcher.length) {
          dispatch(loadingTrue());
          dispatch(searchByName(searcher));
+      } else {
+         console.log('hola')
       }
    };
    

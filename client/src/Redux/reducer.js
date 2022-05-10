@@ -98,8 +98,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       case LESSER_ERROR:
          return {
             ...state,
-            lesserError: payload,
-            pokemon: {}
+            pokemon: {},
+            loading: false,
+            lesserError: payload
          };
       case ERROR_HANDLER:
          return {

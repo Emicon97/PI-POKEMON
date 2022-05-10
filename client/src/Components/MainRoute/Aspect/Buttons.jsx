@@ -3,9 +3,10 @@ import styled from "styled-components";
 const Buttons = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 65%;
 `;
 const Button = styled.button`
   width: 7rem;
@@ -82,5 +83,44 @@ const Select = styled.select`
 const Searchbar = styled.input`
   
 `;
+const PokeButton = styled.button`
+  border-radius: 100%;
+  border: 3px solid black;
+  
+  width: 3rem;
+  height: 3rem;
+  padding-inline: 0 0;
+  
+  outline: 2px solid black;
+  border: 2px solid white;
+  text-shadow: 2px 0 0 #000, -2px 0 0 #000,
+  0 2px 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+  -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
+  -webkit-text-fill-color: white;
+  
+  background: linear-gradient(180deg, rgb(239, 21, 21) 50%, white 50%);
+  
+  &:hover {
+    transition: .5s;
+    transform: rotate(15deg);
+    width: 3.6rem;
+    height: 3.6rem;
+  }
 
-export { Buttons, Button, Select, Searchbar };
+  &:active {
+    transition: .2s;
+    transform: rotate(-45deg);
+    width: 2.6rem;
+    height: 2.6rem;
+    padding-inline: 0 1rem;
+  }
+  
+  transition: .2s;
+
+  margin-left: 1rem;
+  overflow: hidden;
+
+  cursor: pointer;
+`;
+
+export { Buttons, Button, Select, Searchbar, PokeButton };

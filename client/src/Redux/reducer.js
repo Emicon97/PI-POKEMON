@@ -1,4 +1,5 @@
-import { GET_POKEDEX, GET_TYPES, POST_FAKEMON, SORT, FILTER, PAGE_SETTER, GET_POKEMON, GET_PREV, GET_NEXT, LOADING, EMPTY_CARD, ERROR_HANDLER, CLEAR_MESSAGES } from './actions';
+import { GET_POKEDEX, GET_TYPES, POST_FAKEMON, SORT, FILTER, PAGE_SETTER, GET_POKEMON,
+   GET_PREV, GET_NEXT, LOADING, EMPTY_POKEMON, EMPTY_CARD, ERROR_HANDLER, CLEAR_MESSAGES, LESSER_ERROR } from './actions';
 
 const initialState = {
    pokedex: [],
@@ -10,7 +11,8 @@ const initialState = {
    page: [1, 1, 12],
    loading: true,
    error: '',
-   success: ''
+   success: '',
+   lesserError: ''
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -26,6 +28,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
          return {
             ...state,
             types: payload
+         };
+      case GET_POKEMON:
+         return {
+            ...state,
+            pokemon: payload,
+            lesserError: '',
+            loading: false
          };
       case POST_FAKEMON:
          return {
@@ -49,12 +58,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
             pokedex: payload,
             page: [1, 1, 12]
          };
-      case GET_POKEMON:
-         return {
-            ...state,
-            pokemon: payload,
-            loading: false
-         };
       case GET_PREV:
          return {
             ...state,
@@ -72,6 +75,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ...state,
             loading: true
          };
+      case EMPTY_POKEMON:
+         return {
+            ...state,
+            pokemon: {},
+            lesserError: ''
+         };
       case EMPTY_CARD:
          return {
             ...state,
@@ -79,19 +88,25 @@ const rootReducer = (state = initialState, { type, payload }) => {
             loading: true,
             page: payload
          };
-      case ERROR_HANDLER:
-         return {
-            ...state,
-            error: payload,
-            loading: false
-         };
       case CLEAR_MESSAGES:
          return {
             ...state,
             loading: false,
             error: '',
             success: ''
-         }
+         };
+      case LESSER_ERROR:
+         return {
+            ...state,
+            lesserError: payload,
+            pokemon: {}
+         };
+      case ERROR_HANDLER:
+         return {
+            ...state,
+            error: payload,
+            loading: false
+         };
       default:
          return {...state};
    }

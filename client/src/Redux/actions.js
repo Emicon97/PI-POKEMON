@@ -10,13 +10,15 @@ export const GET_POKEMON = 'GET_POKEMON';
 export const GET_PREV = 'GET_PREV';
 export const GET_NEXT = 'GET_NEXT';
 export const LOADING = 'LOADING';
+export const EMPTY_POKEMON = 'EMPTY_POKEMON';
 export const EMPTY_CARD = 'EMPTY_CARD';
-export const ERROR_HANDLER = 'ERROR_HANDLER';
 export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
+export const LESSER_ERROR = 'LESSER_ERROR';
+export const ERROR_HANDLER = 'ERROR_HANDLER';
 
 export function getPokedex () {
-   return dispatch => {
-      return axios('http://localhost:3001/pokemons')
+   return async dispatch => {
+      return await axios('http://localhost:3001/pokemons')
          .then (response => dispatch({
             type: GET_POKEDEX,
             payload: response.data
@@ -28,8 +30,8 @@ export function getPokedex () {
    };
 };
 export function getTypes () {
-   return dispatch => {
-      return axios('http://localhost:3001/types')
+   return async dispatch => {
+      return await axios('http://localhost:3001/types')
          .then (response => dispatch({
             type: GET_TYPES,
             payload: response.data
@@ -40,9 +42,22 @@ export function getTypes () {
          }));
    };
 };
+export function searchByName (name) {
+   return async dispatch => {
+      return await axios(`http://localhost:3001/pokemons/?name=${name}`)
+         .then (response => dispatch({
+            type: GET_POKEMON,
+            payload: response.data
+         }))
+         .catch (error => dispatch({
+            type: LESSER_ERROR,
+            payload: error.response.data
+         }));
+   }
+}
 export function postFakemon (payload) {
-   return dispatch => {
-      return axios.post('http://localhost:3001/pokemons', payload)
+   return async dispatch => {
+      return await axios.post('http://localhost:3001/pokemons', payload)
          .then (response => dispatch({
             type: POST_FAKEMON,
             payload: response.data
@@ -51,8 +66,8 @@ export function postFakemon (payload) {
             type: ERROR_HANDLER,
             payload: error.response.data
          }));
+      };
    };
-};
 export function getSorted (payload) {
    return {
       type: SORT,
@@ -72,8 +87,8 @@ export function pageSetter (payload) {
    };
 };
 export function getPokeData (id) {
-   return dispatch => {
-      return axios(`http://localhost:3001/pokemons/${id}`)
+   return async dispatch => {
+      return await axios(`http://localhost:3001/pokemons/${id}`)
          .then (response => dispatch({
             type: GET_POKEMON,
             payload: response.data
@@ -81,8 +96,8 @@ export function getPokeData (id) {
    };
 };
 export function getPrev (id) {
-   return dispatch => {
-      return axios(`http://localhost:3001/pokemons/${id}`)
+   return async dispatch => {
+      return await axios(`http://localhost:3001/pokemons/${id}`)
          .then (response => dispatch({
             type: GET_PREV,
             payload: response.data
@@ -90,8 +105,8 @@ export function getPrev (id) {
    };
 };
 export function getNext (id) {
-   return dispatch => {
-      return axios(`http://localhost:3001/pokemons/${id}`)
+   return async dispatch => {
+      return await axios(`http://localhost:3001/pokemons/${id}`)
          .then (response => dispatch({
             type: GET_NEXT,
             payload: response.data
@@ -101,6 +116,11 @@ export function getNext (id) {
 export function loadingTrue () {
    return {
       type: LOADING
+   };
+};
+export function emptyPokemon () {
+   return {
+      type: EMPTY_POKEMON
    };
 };
 export function emptyCard (payload) {
@@ -113,4 +133,4 @@ export function clearMessages () {
    return {
       type: CLEAR_MESSAGES
    }
-}
+};

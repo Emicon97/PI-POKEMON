@@ -142,7 +142,16 @@ const Creator = () => {
          sprite
       });
       if (Object.keys(go).length) {
-         setGo(error);
+         setGo({
+            name,
+            hp,
+            attack,
+            defense,
+            speed,
+            height,
+            weight,
+            sprite
+         });
       }
    };
 

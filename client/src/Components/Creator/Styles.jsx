@@ -15,8 +15,6 @@ const Background = styled.div`
    justify-content: center;
    align-items: flex-start;
    flex-direction: column;
-
-   flex-wrap: scroll;
 `;
 const Form = styled.form`
    display: flex;
@@ -26,7 +24,7 @@ const Form = styled.form`
    justify-content: center;
    flex-direction: column;
    flex-wrap: wrap;
-   `;
+`;
 const Label = styled.label`
    display: flex;
    justify-content: center;
@@ -45,6 +43,7 @@ const TypeContainer = styled.div`
    flex-flow: column wrap;
    justify-content: center;
    flex-wrap: wrap;
+
    max-height: 13rem;
    max-width: 13rem;
    margin-bottom: 1rem;

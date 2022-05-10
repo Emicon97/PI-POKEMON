@@ -6,10 +6,10 @@ import PokedexEntrance from '../PokedexEntrance/PokedexEntrance.jsx';
 import Pagination from '../Pagination/Pagination.jsx';
 
 import { Container, Background, Grid } from "../Aspect/Body.jsx";
-import { Buttons, Button, Select, Searchbar } from '../Aspect/Buttons.jsx';
+import { Buttons, Button, Select, Searchbar, PokeButton } from '../Aspect/Buttons.jsx';
 import { Error, Loader } from '../Aspect/Alternate.jsx';
 
-import { getPokedex, getTypes, getSorted, getFiltered, loadingTrue, emptyCard } from "../../../Redux/actions";
+import { getPokedex, getTypes, searchByName, getSorted, getFiltered, loadingTrue, emptyPokemon, emptyCard } from "../../../Redux/actions";
 
 import { sortManager, filterManager } from '../FilterAndSort/filterAndSort';
 
@@ -19,10 +19,13 @@ const MainRoute = () => {
    const pokedex = useSelector(state => state.pokedex);
    const backupdex = useSelector(state => state.backupdex);
    const types = useSelector(state => state.types);
+   const pokemon = useSelector(state => state.pokemon);
    const pages = useSelector(state => state.page);
    const loading = useSelector(state => state.loading);
+   const lesserError = useSelector(state => state.lesserError);
    const error = useSelector(state => state.error);
 
+   const [ searcher, setSearcher ] = useState();
    const [ sorter, setSorter ] = useState();
    const [ filters, setFilters ] = useState();
    const [ changer, setChanger ] = useState(backupdex);
@@ -51,8 +54,19 @@ const MainRoute = () => {
       // eslint-disable-next-line
    }, [filters]);
    
+   const handleInput = e => {
+      e.preventDefault();
+      setSearcher(e.target.value);
+   }
+   
+   const searchManager = e => {
+      e.preventDefault();
+      dispatch(searchByName(searcher));
+   };
+   
    const eventManager = (event, type) => {
       event.preventDefault();
+      dispatch(emptyPokemon());
       event = event.target.value;
       if (type === 'filter') {
          filtering(event.toLowerCase());
@@ -62,6 +76,7 @@ const MainRoute = () => {
    };
 
    const sorting = type => {
+      dispatch(emptyPokemon());
       if (type === 'default') {
          setFil(false);
          setSor(false);
@@ -79,6 +94,7 @@ const MainRoute = () => {
    };
 
    const filtering = type => {
+      dispatch(emptyPokemon());
       if (type === 'pokemon') {
          setPok(true);
          setFak(false);
@@ -111,6 +127,10 @@ const MainRoute = () => {
             {loading ? <Loader>Completando tu Pokédex...</Loader> :
             <>
             <Buttons>
+               <form onSubmit={e => searchManager(e)}>
+                  <Searchbar placeholder="Buscá Pokémon o Fakemon" onChange={e => handleInput(e)}></Searchbar>
+                  <PokeButton type="submit" >―⬤—</PokeButton>
+               </form>
                <Link to={'/creation'}>
                   <Button isSpecial={true} isOn={true}>Crear Pokémon</Button>
                </Link>
@@ -137,7 +157,15 @@ const MainRoute = () => {
                </Select>
             </Buttons>
             <Grid>
-               {pokedex.length ? pokedex.slice(pages[1]-1, pages[2]).map(pokemon => {
+               {pokemon.name ? <PokedexEntrance
+                        key = {pokemon.id}
+                        sprite = {pokemon.sprite}
+                        name = {pokemon.name}
+                        types = {pokemon.types ? pokemon.types : ['¡Este Fakemon no tiene tipos!']}
+                        id = {pokemon.id}
+                     /> : lesserError.length ? <PokedexEntrance lesserError={true}/> :
+
+               pokedex.length ? pokedex.slice(pages[1]-1, pages[2]).map(pokemon => {
                   pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
                   return (
                      <PokedexEntrance

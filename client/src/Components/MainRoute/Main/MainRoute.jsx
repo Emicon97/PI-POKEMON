@@ -61,9 +61,10 @@ const MainRoute = () => {
    
    const searchManager = e => {
       e.preventDefault();
-      dispatch(loadingTrue());
-      dispatch(searchByName(searcher));
-      setSearcher('');
+      if (searcher.length) {
+         dispatch(loadingTrue());
+         dispatch(searchByName(searcher));
+      }
    };
    
    const eventManager = (event, type) => {
@@ -133,7 +134,7 @@ const MainRoute = () => {
                   <Button isSpecial={true} isOn={true}>Crear Pokémon</Button>
                </Link>
                <form onSubmit={e => searchManager(e)}>
-                  <Searchbar placeholder="Buscá Pokémon o Fakemon..." value={searcher}
+                  <Searchbar placeholder="Buscá Pokémon o Fakemon..." 
                      onChange={e => handleInput(e)}></Searchbar>
                   <PokeButton type="submit" >―⬤—</PokeButton>
                </form>

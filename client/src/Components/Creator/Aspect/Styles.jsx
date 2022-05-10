@@ -22,12 +22,15 @@ const Form = styled.form`
    
    width: 36rem;
    height: 50rem;
+   border-radius: 1%;
    
    align-items: flex-start;
    justify-content: flex-end;
    flex-direction: column;
    
    background-color: rgb(221, 241, 243, .6);
+
+   ${props => props.isLoading ? 'align-items: center; justify-content: center; font-size: large; font-weight: bold' : null}
 `;
 const Label = styled.label`
    display: flex;
@@ -48,6 +51,22 @@ const Input = styled.input`
       margin: 0;
    }
    -moz-appearance: textfield;
+   
+   color: #184457;
+
+   &:focus {
+      border: 2px solid #00aeff;
+      outline: none;
+      background-color: #d2ffff;
+      color: #0c76a3;
+      font-size: 18px;   
+   }
+   ${props => props.hasErrors ? 'color: #a70c0c; background-color: rgb(255, 215, 215); border: 2px solid #843030;' : null}
+   ${props => props.hasErrors ? '&: focus {color: #ef7625; background-color: rgb(255, 204, 165); border: 2px solid orange;}' : null}
+
+   transition: .3s;
+
+   font-weight: 555;
 `;
 const Div = styled.div`
    display: flex;
@@ -57,8 +76,15 @@ const Div = styled.div`
    flex-wrap: auto;
 `;
 const Span = styled.span`
-   margin-left: 1rem;
+   margin-left: .5rem;
+   margin-right: .5rem;
+
    color: red;
+   text-shadow: 1px 0 0 rgb(248, 221, 221), -1px 0 0 rgb(248, 221, 221),
+      0 1px 0 rgb(248, 221, 221), 0 -1px 0 rgb(248, 221, 221), 1px 1px 0 rgb(248, 221, 221),
+      -1px -1px 0 rgb(248, 221, 221), -1px 1px 0 rgb(248, 221, 221), 1px -1px 0 rgb(248, 221, 221);
+   ${props => props.isLoading ? 'color: #2788c1; text-shadow: 1px 0 0 rgb(221, 242, 248), -1px 0 0 rgb(221, 242, 248), 0 1px 0 rgb(221, 242, 248), 0 -1px 0 rgb(221, 242, 248), 1px 1px 0 rgb(221, 242, 248), -1px -1px 0 rgb(221, 242, 248), -1px 1px 0 rgb(221, 242, 248), 1px -1px 0 rgb(221, 242, 248);' :
+      'font-weight: 555'}
 `;
 const TypeContainer = styled.div`
    display: flex;

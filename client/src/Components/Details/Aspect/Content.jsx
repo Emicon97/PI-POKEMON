@@ -68,7 +68,8 @@ const Type = styled.div`
       props.name === 'Electric' ? 'background-color: #ffcc00; border 3px solid #ab982c; color: #ad9637;' :
       props.name === 'Ground' ? 'background-color: #ceb659; border 3px solid #a49b67; color: #8a7f4a;' :
       props.name === 'Fairy' ? 'background-color: #fd9afd; border: 3px solid rgb(188, 87, 159); color: rgb(239, 220, 234)' :
-      props.name ==='Dragon' ? 'background-color: rgb(35, 35, 169); border: 3px solid rgb(89, 24, 138); color: #b30e0e ' :
+      props.name === 'Dragon' ? 'background-color: rgb(35, 35, 169); border: 3px solid rgb(89, 24, 138); color: #b30e0e ' :
+      props.name === 'Psychic' ? 'background-color: #ff33ff; border: 3px solid #f84dfb; color: #ff86ff;' :
       'background-color: #0336ff; border: 3px solid #151552; color: #ddb100; font-size: small; width: 11rem; height: 2.2rem;'
    };
 

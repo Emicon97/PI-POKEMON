@@ -101,7 +101,7 @@ const Creator = () => {
 
       
       if (!req.name) {
-         name = '¡Ponele un nombre que te guste a tu Fakemon!';
+         name = '¡Ponele a tu Pokémon un nombre que te guste!';
       } else if (req.name.length > 18) {
          name = '¡Es difícil recordar ese nombre!';
       }
@@ -195,13 +195,13 @@ const Creator = () => {
    
    return (
       <Background>
-         <Form onSubmit={e => handleSubmit(e)}>
-         {loading === true ? <Span>Registrando datos</Span> :
+         <Form isLoading={loading} onSubmit={e => handleSubmit(e)}>
+         {loading === true ? <Span isLoading={true} >Registrando datos</Span> :
          <>
             <Div>¡CREÁ TU PROPIO POKÉMON!</Div>
             <Label>Nombre</Label>
             <Div>
-            <Input type="text" value={req.name} name="name"
+            <Input type="text" value={req.name} name="name" hasErrors={go.name}
                placeholder="Campo obligatorio" onChange={e => handleInput(e)} />
                   {go.name ? <Span>{go.name}</Span> : null}
             </Div>

@@ -21,7 +21,7 @@ async function getDbPokemon (value, request) {
 async function getDbDex () {
    let fakes = await Pokemon.count();
    if (!fakes) return [ null , 0 ];
-   fakes = Math.floor(Math.random()*fakes);
+   fakes = Math.ceil(Math.random()*fakes);
    fakes === 0 ? fakes = 1 : fakes;
 
    let data = [];
@@ -41,12 +41,12 @@ async function getDbDex () {
    return [ data, fakes ];
 }
 
-async function postPokemon (name, hp, attack, defense, speed, height, weight, types, img) {
+async function postPokemon (name, hp, attack, defense, speed, height, weight, types, sprite) {
    if (!name) throw new Error ('¡Si descubriste un Fakemon, deberías ponerle un nombre!');
-   name = name.toLowerCase();
+   name = name.toLowerCase().trim();
    let pokemon = await checkPokemon(name);
    if (pokemon) throw new Error ('¡Ese es un Pokémon!');
-
+   
    let id = await Pokemon.count();
    id++;
    let [ fakemon, created ] = await Pokemon.findOrCreate({
@@ -59,13 +59,13 @@ async function postPokemon (name, hp, attack, defense, speed, height, weight, ty
          speed,
          height,
          weight,
-         img
+         sprite
       }
    });
-   if (!created) throw new Error ('¡Ese Fakemon ya está registrado en nuestra Fakédex!');
+   if (!created) throw new Error ('¡Ese Fakemon ya está registrado en nuestra Fakedex!');
    
    if (types) fakemon = await typeManager(fakemon, types);
-   return fakemon;
+   return '¡¡¡Felicitaciones!!! Tu Pokémon fue creado con éxito.';
 }
 
 function idFixer (id) {

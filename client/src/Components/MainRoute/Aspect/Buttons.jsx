@@ -81,7 +81,66 @@ const Select = styled.select`
   };
 `;
 const Searchbar = styled.input`
+  width: 15rem;
+  height: 2.4rem;
+  border-radius: 7%;
+  padding-inline: .5rem 0;
   
+  border: 2px solid rgb(255, 47, 47);
+  outline: 3px solid black;
+  background-color: rgb(250, 250, 250);
+   
+  &::placeholder {
+    color: #4f4f4f;
+    opacity: .5; 
+  }
+
+  &:focus {
+    transition: .2s;
+    background-color: white;
+
+    width: 16rem;
+    height: 3rem;
+
+    &:hover {
+      background-color: #ffb8b8;
+      color: white;
+    }
+
+    &::placeholder {
+      color: #999999;
+    }
+
+    border: 2px solid white;
+    outline: 2px solid rgb(255, 47, 47);
+    caret-color: #fff2ab;
+    
+    font-weight: 600;
+    text-shadow: 2px 0 0 #000, -2px 0 0 #000,
+    0 2px 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+    -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
+    color: white;
+  }
+  
+  &:hover {
+    transition: .2s;
+    background-color: #c01212;
+    font-weight: 600;
+    &::placeholder {
+      text-shadow: 2px 0 0 #000, -2px 0 0 #000,
+      0 2px 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+      -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
+    color: white;
+    }
+    border: 2px solid white;
+    color: white;
+    text-shadow: 2px 0 0 #000, -2px 0 0 #000,
+      0 2px 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
+      -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
+  }
+
+  transition: .2s;
+  font-weight: bolder;
 `;
 const PokeButton = styled.button`
   border-radius: 100%;

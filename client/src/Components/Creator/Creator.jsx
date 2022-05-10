@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { Background, Form, Label, Input, TypeContainer } from "./Styles";
+import { Background, Form, Label, Input, Div, Span, TypeContainer, MiniButton } from "./Aspect/Styles.jsx";
+import { Button } from "./Aspect/SuccessSyles";
 
 import { getTypes, postFakemon, loadingTrue, clearMessages } from "../../Redux/actions";
 
@@ -98,13 +99,7 @@ const Creator = () => {
       let weight ='';
       let sprite = '';
 
-      for (let x in req) {
-         if (x !== 'name' && x !== 'sprite' && x !== 'types') {
-            if (!req[x]){
-               req[x] = 0;
-            }
-         }
-      }
+      
       if (!req.name) {
          name = '¡Ponele un nombre que te guste a tu Fakemon!';
       } else if (req.name.length > 18) {
@@ -158,6 +153,14 @@ const Creator = () => {
    const handleSubmit = e => {
       e.preventDefault()
 
+      for (let x in req) {
+         if (x !== 'name' && x !== 'sprite' && x !== 'types') {
+            if (!req[x]){
+               req[x] = 0;
+            }
+         }
+      }
+
       setGo({});
       setGo(error);
 
@@ -176,7 +179,9 @@ const Creator = () => {
 
    const handleMessage = (suc, err) => {
       if (suc || err) {
-         successMessage ? handleSuccess() :
+         if (successMessage) {
+            return history.push('/success');
+         }
          setGo(errors => {
             return {
                ...errors,
@@ -184,45 +189,69 @@ const Creator = () => {
             };
          });
       }
+      
       dispatch(clearMessages());
-   };
-   
-   const handleSuccess = () => {
-      dispatch(clearMessages());
-      //history.push('/home');
    };
    
    return (
       <Background>
-         {loading === true ? <p>Registrando datos</p> :
          <Form onSubmit={e => handleSubmit(e)}>
+         {loading === true ? <Span>Registrando datos</Span> :
+         <>
+            <Div>¡CREÁ TU PROPIO POKÉMON!</Div>
             <Label>Nombre</Label>
-            <Input type="text" value={req.name} name="name" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/><br/><br/>
-            {go.name ? <p>{go.name}</p> : null}
-            <Label>Estadísticas:</Label>
-            <Label>{loading}</Label>
+            <Div>
+            <Input type="text" value={req.name} name="name"
+               placeholder="Campo obligatorio" onChange={e => handleInput(e)} />
+                  {go.name ? <Span>{go.name}</Span> : null}
+            </Div>
+                     <p/>
+            <Label>―Estadísticas:</Label>
             <Label>Puntos de salud</Label>
-            <Input type="number" value={req.hp} name="hp" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/>
-            {go.hp ? <p>{go.hp}</p> : null}
+            <Div>
+            <Input type="number" value={req.hp} name="hp"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.hp ? <Span>{go.hp}</Span> : null}
+                     <br/>
+            </Div>
             <Label>Ataque</Label>
-            <Input type="number" value={req.attack} name="attack" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/>
-            {go.attack ? <p>{go.attack}</p> : null}
+            <Div>
+            <Input type="number" value={req.attack} name="attack"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.attack ? <Span>{go.attack}</Span> : null}
+            </Div>
             <Label>Defensa</Label>
-            <Input type="number" value={req.defense} name="defense" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/>
-            {go.defense ? <p>{go.defense}</p> : null}
+            <Div>
+            <Input type="number" value={req.defense} name="defense"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.defense ? <Span>{go.defense}</Span> : null}
+            </Div>
             <Label>Velocidad</Label>
-            <Input type="number" value={req.speed} name="speed" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/>
-            {go.speed ? <p>{go.speed}</p> : null}
+            <Div>
+            <Input type="number" value={req.speed} name="speed"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.speed ? <Span>{go.speed}</Span> : null}
+            </Div>
             <Label>Altura</Label>
-            <Input type="number" value={req.height} name="height" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/>
-            {go.height ? <p>{go.height}</p> : null}
+            <Div>
+            <Input type="number" value={req.height} name="height"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.height ? <Span>{go.height}</Span> : null}
+            </Div>
             <Label>Peso</Label>
-            <Input type="number" value={req.weight} name="weight" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/><br/><br/>
-            {go.weight ? <p>{go.weight}</p> : null}
+            <Div>
+            <Input type="number" value={req.weight} name="weight"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.weight ? <Span>{go.weight}</Span> : null}
+            </Div><br/><br/>
             <Label>Imagen</Label>
-            <Input type="url" value={req.sprite} name="sprite" placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} /><br/><br/><br/>
-            {go.sprite ? <p>{go.sprite}</p> : null}
-            <Label>Tipos</Label><br/>
+            <Div>
+            <Input type="url" value={req.sprite} name="sprite"
+               placeholder="Ingrese un parámetro" onChange={e => handleInput(e)} />
+                  {go.sprite ? <Span>{go.sprite}</Span> : null}
+                     <br/><br/><br/>
+            </Div>
+            <Label>Tipos:</Label><br/>
             <TypeContainer >
             {types && types.map((type) => {
                let labelName = type.name[0].toUpperCase() + type.name.slice(1);
@@ -230,14 +259,16 @@ const Creator = () => {
                   return (
                      <div key={type}>
                         <Label>{labelName}</Label>
-                        <Input id={type} value={type} type="checkbox" placeholder="Ingrese un parámetro"
-                           isCheckbox={true} onChange={e => handleType(e)}/><br/><br/> 
+                        <Input id={type} value={type} type="checkbox"
+                           placeholder="Ingrese un parámetro" isCheckbox={true}
+                              onChange={e => handleType(e)}/><br/>
                      </div>
                );
             })}
             </TypeContainer>
-            <Input type="submit" value="¡Crear Fakemon!" />
-         </Form>}
+            <MiniButton type="submit" value="¡Crear Fakemon!">―⬤—</MiniButton></>}
+         </Form>
+         <Button isForm={true} onClick={() => history.push('/home')}>Home</Button>
       </Background>
    )
 };

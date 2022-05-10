@@ -7,7 +7,7 @@ import Pagination from '../Pagination/Pagination.jsx';
 
 import { Container, Background, Grid } from "../Aspect/Body.jsx";
 import { Buttons, Button, Select, Searchbar, PokeButton } from '../Aspect/Buttons.jsx';
-import { Error, Loader } from '../Aspect/Alternate.jsx';
+import { Loader, Error } from '../Aspect/Alternate.jsx';
 
 import { getPokedex, getTypes, searchByName, getSorted, getFiltered, loadingTrue, emptyPokemon, emptyCard } from "../../../Redux/actions";
 
@@ -61,7 +61,9 @@ const MainRoute = () => {
    
    const searchManager = e => {
       e.preventDefault();
+      dispatch(loadingTrue());
       dispatch(searchByName(searcher));
+      setSearcher('');
    };
    
    const eventManager = (event, type) => {
@@ -127,13 +129,14 @@ const MainRoute = () => {
             {loading ? <Loader>Completando tu Pokédex...</Loader> :
             <>
             <Buttons>
-               <form onSubmit={e => searchManager(e)}>
-                  <Searchbar placeholder="Buscá Pokémon o Fakemon" onChange={e => handleInput(e)}></Searchbar>
-                  <PokeButton type="submit" >―⬤—</PokeButton>
-               </form>
                <Link to={'/creation'}>
                   <Button isSpecial={true} isOn={true}>Crear Pokémon</Button>
                </Link>
+               <form onSubmit={e => searchManager(e)}>
+                  <Searchbar placeholder="Buscá Pokémon o Fakemon..." value={searcher}
+                     onChange={e => handleInput(e)}></Searchbar>
+                  <PokeButton type="submit" >―⬤—</PokeButton>
+               </form>
             </Buttons>
             <Buttons>
                <Select name="typeFilter" isOn={fil} value="" onChange={value => eventManager(value, 'filter')}>

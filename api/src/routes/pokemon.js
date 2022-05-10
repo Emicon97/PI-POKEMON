@@ -1,5 +1,5 @@
-const { getApiPokemon, fullPokedex } = require('./apiCalls');
-const { getDbPokemon, getDbDex, postPokemon } = require('./dbCalls');
+const { getApiPokemon, fullPokedex } = require('../Controllers/apiCalls');
+const { getDbPokemon, getDbDex, postPokemon } = require('../Controllers/dbCalls');
 const { json, Router } = require('express');
 
 const router = Router();
@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
    try {
       let { name } = req.query;
       if (name) {
-         name = name.toLowerCase()
+         name = name.toLowerCase().trim();
          let data = await getDbPokemon(name, 'name');
          data ? data : data = await getApiPokemon(name);
          res.json(data);
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
          const apiDex  = await fullPokedex(surplus);
          
          var fakeDex = [];
-         dbDex ? fakeDex = [ ...dbDex, ...apiDex ] : fakeDex = [apiDex];
+         dbDex ? fakeDex = [ ...dbDex, ...apiDex ] : fakeDex = apiDex;
          res.json(fakeDex);
       }
    } catch (err) {
@@ -36,17 +36,17 @@ router.get('/:idPokemon', async (req, res) => {
 
       res.json(pokeData);
    } catch (err) {
-      res.json(err.message);
+      res.status(404).json(err.message);
    }
 });
 
 router.post('/', async (req, res) => {
    try {
-      var { name, hp, attack, defense, speed, height, weight, types } = req.body;
-      let pokemon = await postPokemon(name, hp, attack, defense, speed, height, weight, types);
-      res.json(pokemon);
+      var { name, hp, attack, defense, speed, height, weight, types, sprite } = req.body;
+      let message = await postPokemon(name, hp, attack, defense, speed, height, weight, types, sprite);
+      res.json(message);
    } catch (err) {
-      res.json(err.message);
+      res.status(409).json(err.message);
    }
 });
 

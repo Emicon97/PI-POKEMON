@@ -15,7 +15,7 @@ async function getTypes () {
 
 async function typeManager (fakemon, types) {
    await getTypes();
-   
+
    for (let type of types) {
       type = await Type.findOne({where:{name:type}});
       await fakemon.addType(type);

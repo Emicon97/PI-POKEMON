@@ -1,4 +1,4 @@
-const { getTypes } = require('./typeCalls')
+const { getTypes } = require('../Controllers/typeCalls')
 const { Router } = require('express');
 
 const router = Router();

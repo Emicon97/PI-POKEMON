@@ -1,5 +1,5 @@
 import { GET_POKEDEX, GET_TYPES, POST_FAKEMON, SORT, FILTER, PAGE_SETTER, GET_POKEMON,
-   GET_PREV, GET_NEXT, LOADING, EMPTY_POKEMON, EMPTY_CARD, ERROR_HANDLER, CLEAR_MESSAGES, LESSER_ERROR } from './actions';
+   GET_PREV, GET_NEXT, LOADING, EMPTY_POKEMON, EMPTY_CARD, ERROR_HANDLER, CLEAR_MESSAGES, LESSER_ERROR, DELETE_POKEMON } from './actions';
 
 const initialState = {
    pokedex: [],
@@ -41,6 +41,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ...state,
             success: payload,
             loading: false
+         }
+      case DELETE_POKEMON:
+         return {
+            ...state,
+            success: payload
          }
       case PAGE_SETTER:
          return {

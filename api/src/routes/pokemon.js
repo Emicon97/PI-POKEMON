@@ -1,5 +1,5 @@
 const { getApiPokemon, fullPokedex } = require('../Controllers/apiCalls');
-const { getDbPokemon, getDbDex, postPokemon } = require('../Controllers/dbCalls');
+const { getDbPokemon, getDbDex, postPokemon, deleteFunction } = require('../Controllers/dbCalls');
 const { json, Router } = require('express');
 
 const router = Router();
@@ -49,5 +49,17 @@ router.post('/', async (req, res) => {
       res.status(409).json(err.message);
    }
 });
+
+router.delete('/', async (req, res) => {
+   try {
+      let { id } = req.body;
+      console.log(id)
+      let deletionMessage = await deleteFunction(id);
+      console.log(deletionMessage)
+      res.json(deletionMessage);
+   } catch (err) {
+      res.status(404).json(err.message);
+   }
+})
 
 module.exports = router;

@@ -7,6 +7,7 @@ export const SORT = 'SORT';
 export const FILTER =  'FILTER';
 export const PAGE_SETTER = 'PAGE_SETTER';
 export const GET_POKEMON = 'GET_POKEMON';
+export const DELETE_POKEMON = 'DELETE_POKEMON';
 export const GET_PREV = 'GET_PREV';
 export const GET_NEXT = 'GET_NEXT';
 export const LOADING = 'LOADING';
@@ -66,8 +67,23 @@ export function postFakemon (payload) {
             type: ERROR_HANDLER,
             payload: error.response.data
          }));
-      };
    };
+};
+export function deleteFakemon (id) {
+   console.log(id)
+   return async dispatch => {
+      return await axios.delete('http://localhost:3001/pokemons', id)
+         .then (response => dispatch({
+            type: DELETE_POKEMON,
+            payload: response.data
+         }))
+         .catch (error => dispatch({
+            type: LESSER_ERROR,
+            payload: error.response.data
+         }));
+   };
+};
+
 export function getSorted (payload) {
    return {
       type: SORT,

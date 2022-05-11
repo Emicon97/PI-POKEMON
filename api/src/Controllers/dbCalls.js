@@ -74,4 +74,12 @@ function idFixer (id) {
    return id;
 }
 
-module.exports = { getDbPokemon, postPokemon, getDbDex };
+async function deleteFunction (id) {
+   if (id) {
+      var deleted = await Pokemon.destroy({where: {id}})
+   }
+   if (deleted) return 'Este Fakemon fue borrado exitosamente.';
+   else throw new Error ('No se ha encontrado este Fakemon');
+}
+
+module.exports = { getDbPokemon, postPokemon, getDbDex, deleteFunction };

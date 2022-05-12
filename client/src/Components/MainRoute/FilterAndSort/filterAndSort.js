@@ -53,8 +53,8 @@ export function filterManager (type, [pok, fak, fil], backupdex, sor) {
       return fakemon;
    }
    
-   pok ? filtered = pokemon :
-   fak ? filtered = fakemon :
+   pok && !fak ? filtered = pokemon :
+   fak && !pok ? filtered = fakemon :
    filtered = backupdex;
 
    filtered = typeFilter(type, filtered);

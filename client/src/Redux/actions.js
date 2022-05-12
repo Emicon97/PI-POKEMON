@@ -19,7 +19,8 @@ export const ERROR_HANDLER = 'ERROR_HANDLER';
 
 export function getPokedex () {
    return async dispatch => {
-      return await axios('http://localhost:3001/pokemons')
+      return await axios('https://pokemonshowroom.herokuapp.com/pokemons')
+      //return await axios('http://localhost:3001/pokemons')
          .then (response => dispatch({
             type: GET_POKEDEX,
             payload: response.data
@@ -32,7 +33,8 @@ export function getPokedex () {
 };
 export function getTypes () {
    return async dispatch => {
-      return await axios('http://localhost:3001/types')
+      return await axios('https://pokemonshowroom.herokuapp.com/types')
+      //return await axios('http://localhost:3001/types')
          .then (response => dispatch({
             type: GET_TYPES,
             payload: response.data
@@ -45,7 +47,8 @@ export function getTypes () {
 };
 export function searchByName (name) {
    return async dispatch => {
-      return await axios(`http://localhost:3001/pokemons/?name=${name}`)
+      return await axios(`https://pokemonshowroom.herokuapp.com/?name=${name}`)
+      //return await axios(`http://localhost:3001/pokemons/?name=${name}`)
          .then (response => dispatch({
             type: GET_POKEMON,
             payload: response.data
@@ -58,7 +61,8 @@ export function searchByName (name) {
 }
 export function postFakemon (payload) {
    return async dispatch => {
-      return await axios.post('http://localhost:3001/pokemons', payload)
+      return await axios.post('https://pokemonshowroom.herokuapp.com/pokemons', payload)
+      //return await axios.post(('http://localhost:3001/pokemons/', payload))
          .then (response => dispatch({
             type: POST_FAKEMON,
             payload: response.data
@@ -71,7 +75,8 @@ export function postFakemon (payload) {
 };
 export function deleteFakemon (payload) {
    return async dispatch => {
-      return await axios.delete(`http://localhost:3001/pokemons/${payload}`)
+      return await axios.delete(`https://pokemonshowroom.herokuapp.com/pokemons/${payload}`)
+      //return await axios.delete(`http://localhost:3001/pokemons/${payload}`)
          .then (response => dispatch({
             type: DELETE_POKEMON,
             payload: response.data
@@ -103,7 +108,8 @@ export function pageSetter (payload) {
 };
 export function getPokeData (id) {
    return async dispatch => {
-      return await axios(`http://localhost:3001/pokemons/${id}`)
+      return await axios(`https://pokemonshowroom.herokuapp.com/pokemons/${id}`)
+      //return await axios(`https://localhost:3001/pokemons/${id}`)
          .then (response => dispatch({
             type: GET_POKEMON,
             payload: response.data
@@ -112,7 +118,8 @@ export function getPokeData (id) {
 };
 export function getPrev (id) {
    return async dispatch => {
-      return await axios(`http://localhost:3001/pokemons/${id}`)
+      return await axios(`https://pokemonshowroom.herokuapp.com/pokemons/${id}`)
+      //return await axios(`https://localhost:3001/pokemons/${id}`)
          .then (response => dispatch({
             type: GET_PREV,
             payload: response.data
@@ -121,7 +128,8 @@ export function getPrev (id) {
 };
 export function getNext (id) {
    return async dispatch => {
-      return await axios(`http://localhost:3001/pokemons/${id}`)
+      return await axios(`https://pokemonshowroom.herokuapp.com/pokemons/${id}`)
+      //return await axios(`https://localhost:3001/pokemons/${id}`)
          .then (response => dispatch({
             type: GET_NEXT,
             payload: response.data

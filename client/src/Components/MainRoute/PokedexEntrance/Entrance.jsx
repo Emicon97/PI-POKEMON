@@ -52,7 +52,7 @@ const Entrance = styled.div`
    
    ${props => props.hasErrors ? 'display: flex; align-items: center;' : null }
 
-   transition: 1.5s ease-in;
+   transition: 1s ease-in;
    transition-delay: 200ms;
 `;
 const LinkBox = styled.div`

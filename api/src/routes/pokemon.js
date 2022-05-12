@@ -42,23 +42,21 @@ router.get('/:idPokemon', async (req, res) => {
 
 router.post('/', async (req, res) => {
    try {
-      var { name, hp, attack, defense, speed, height, weight, types, sprite } = req.body;
+      let { name, hp, attack, defense, speed, height, weight, types, sprite } = req.body;
       let message = await postPokemon(name, hp, attack, defense, speed, height, weight, types, sprite);
-      res.json(message);
+      res.status(201).json(message);
    } catch (err) {
       res.status(409).json(err.message);
    }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
    try {
-      let { id } = req.body;
-      console.log(id)
+      var { id } = req.params;
       let deletionMessage = await deleteFunction(id);
-      console.log(deletionMessage)
       res.json(deletionMessage);
    } catch (err) {
-      res.status(404).json(err.message);
+      res.status(418).json(err.message);
    }
 })
 

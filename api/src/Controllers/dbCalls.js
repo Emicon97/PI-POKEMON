@@ -25,16 +25,21 @@ async function getDbDex () {
    fakes === 0 ? fakes = 1 : fakes;
 
    let data = [];
-   for (let i = 1; i < fakes+1; i++) {
+   let limit = fakes+1;
+   for (let i = 1; i < limit; i++) {
       fakemon = await Pokemon.findByPk(`Fakemon ${i}`);
-      fakemon = await getFakeTypes(fakemon);
-      fakemon = {
-         sprite: fakemon.sprite,
-         name: fakemon.name,
-         types: fakemon.dataValues.types,
-         id: fakemon.id
+      if (!fakemon) {
+         limit++;
+      } else {
+         fakemon = await getFakeTypes(fakemon);
+         fakemon = {
+            sprite: fakemon.sprite,
+            name: fakemon.name,
+            types: fakemon.dataValues.types,
+            id: fakemon.id
+         }
+         data.push(fakemon);
       }
-      data.push(fakemon);
    }
 
    data.length > 20 ? data.length = 20 : data.length;
@@ -79,7 +84,7 @@ async function deleteFunction (id) {
       var deleted = await Pokemon.destroy({where: {id}})
    }
    if (deleted) return 'Este Fakemon fue borrado exitosamente.';
-   else throw new Error ('No se ha encontrado este Fakemon');
+   else throw new Error ('¡Ese es un Pokémon! Y no se puede borrar. NO. SE. PUEDE. BORRAR.');
 }
 
 module.exports = { getDbPokemon, postPokemon, getDbDex, deleteFunction };

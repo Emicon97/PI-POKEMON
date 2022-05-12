@@ -8,6 +8,8 @@ const Name = styled.h1`
 
    font-size: 900;
    font-weight: 700;
+
+   margin-top: -.1rem;
 `;
 const Img = styled.image`
    margin-top: -4rem;
@@ -40,7 +42,8 @@ const Text = styled.h2`
    font-size: 500;
    font-weight: 500;
 
-   margin-top: -1rem;
+   
+   ${props => props.isId ? 'margin-top: 1rem;' : 'nulmargin-top: -1rem;' }
    margin-bottom: -1rem;
    `;
 const Types = styled.div`

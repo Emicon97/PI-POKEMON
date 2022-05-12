@@ -9,7 +9,7 @@ import { Container, Background, Grid } from "../Aspect/Body.jsx";
 import { Buttons, Button, Select, Searchbar, PokeButton } from '../Aspect/Buttons.jsx';
 import { Loader, Error } from '../Aspect/Alternate.jsx';
 
-import { getPokedex, getTypes, searchByName, getSorted, getFiltered, loadingTrue, emptyPokemon, emptyCard } from "../../../Redux/actions";
+import { getPokedex, getTypes, searchByName, getSorted, getFiltered, loadingTrue, emptyPokemon, emptyCard, lesserErrorHandler } from "../../../Redux/actions";
 
 import { sortManager, filterManager } from '../FilterAndSort/filterAndSort';
 
@@ -64,8 +64,6 @@ const MainRoute = () => {
       if (searcher.length) {
          dispatch(loadingTrue());
          dispatch(searchByName(searcher));
-      } else {
-         console.log('hola')
       }
    };
    
@@ -91,10 +89,12 @@ const MainRoute = () => {
          setFak(true);
          return setTod(true);
       }
-      if (pokedex.length) {
+      try {
          sorter ? setSorter(false) : setSorter(true);
          setChanger(sortManager(type, pokedex));
          setSor(type);
+      } catch (err) {
+         dispatch(lesserErrorHandler(err.message));
       }
    };
 
@@ -112,8 +112,12 @@ const MainRoute = () => {
          setTod(false)
          setFil(type);
       }
-      setChanger(filterManager(type, [pok, fak, fil], backupdex, sor));
-      filters ? setFilters(false) : setFilters(true);
+      try {
+         filters ? setFilters(false) : setFilters(true);
+         setChanger(filterManager(type, [pok, fak, fil], backupdex, sor));
+      } catch (err) {
+         dispatch(lesserErrorHandler(err.message));
+      }
    };
    
    if (error) {
@@ -166,10 +170,10 @@ const MainRoute = () => {
                {pokemon.name ? <PokedexEntrance
                         key = {pokemon.id}
                         sprite = {pokemon.sprite}
-                        name = {pokemon.name}
+                        name = {pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}
                         types = {pokemon.types ? pokemon.types : ['¡Este Fakemon no tiene tipos!']}
                         id = {pokemon.id}
-                     /> : lesserError.length ? <PokedexEntrance lesserError={true}/> :
+                     /> : lesserError.length ? <PokedexEntrance/> :
 
                pokedex.length ? pokedex.slice(pages[1]-1, pages[2]).map(pokemon => {
                   pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
@@ -182,7 +186,7 @@ const MainRoute = () => {
                         id = {pokemon.id}
                      />
                   );
-               }) : <PokedexEntrance lesserError={true}/>}
+               }) : <PokedexEntrance/>}
             </Grid>
             <Pagination></Pagination>
             </>           

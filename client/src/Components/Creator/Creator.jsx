@@ -179,7 +179,7 @@ const Creator = () => {
 
    const handleMessage = (suc, err) => {
       if (suc || err) {
-         if (successMessage) {
+         if (successMessage && req.name.length) {
             return history.push('/success');
          }
          setGo(errors => {
@@ -189,7 +189,6 @@ const Creator = () => {
             };
          });
       }
-      
       dispatch(clearMessages());
    };
    

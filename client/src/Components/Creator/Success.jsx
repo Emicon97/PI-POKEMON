@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { Background, Div, Button } from "./Aspect/SuccessSyles";
 
-import { clearMessages } from '../../Redux/actions';
+import { clearMessages, loadingTrue } from '../../Redux/actions';
 
 const Success = () => {
    const dispatch = useDispatch();
@@ -12,7 +12,10 @@ const Success = () => {
    const history = useHistory();
 
    useEffect(() => {
-      return () => {dispatch(clearMessages())};
+      return () => {
+         dispatch(clearMessages());
+         dispatch(loadingTrue());
+      };
       // eslint-disable-next-line
    }, []);
 

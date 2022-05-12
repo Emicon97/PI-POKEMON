@@ -13,7 +13,9 @@ const NextEntrance = ({id}) => {;
    const [ loading, setLoading ] = useState(true);
    
    useEffect(() => {
-      dispatch(getNext(id));
+      if (!Number.isNaN(id)) {
+         dispatch(getNext(id));
+      }
       return () => setLoading(true);
       // eslint-disable-next-line
    }, [id]);

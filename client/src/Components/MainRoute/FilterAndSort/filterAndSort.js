@@ -27,6 +27,7 @@ export function sortManager (sortType, pokedex) {
          break;
       default: sorted = pokedex;
    }
+   if (!sorted.length) throw new Error ('¡No hay nada que ordenar! Creá Fakemon aquí.');
    return sorted;
 };
          
@@ -50,6 +51,7 @@ export function filterManager (type, [pok, fak, fil], backupdex, sor) {
    if (type === 'fakemon') {
       if (fil) fakemon = typeFilter(fil, fakemon);
       if (sor) fakemon = sortManager(sor, fakemon);
+      if (!fakemon.length) throw new Error ('¡No hay Fakemon registrados aún! Pero podés crear uno aquí.');
       return fakemon;
    }
    
@@ -59,6 +61,7 @@ export function filterManager (type, [pok, fak, fil], backupdex, sor) {
 
    filtered = typeFilter(type, filtered);
    if (sor) filtered = sortManager(sor, filtered);
+   if (!filtered.length) throw new Error ('¡No hay Pokémon registrados de ese tipo! Pero podés crear uno aquí.');
    return filtered;
 };
 

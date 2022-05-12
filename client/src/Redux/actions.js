@@ -69,16 +69,15 @@ export function postFakemon (payload) {
          }));
    };
 };
-export function deleteFakemon (id) {
-   console.log(id)
+export function deleteFakemon (payload) {
    return async dispatch => {
-      return await axios.delete('http://localhost:3001/pokemons', id)
+      return await axios.delete(`http://localhost:3001/pokemons/${payload}`)
          .then (response => dispatch({
             type: DELETE_POKEMON,
             payload: response.data
          }))
          .catch (error => dispatch({
-            type: LESSER_ERROR,
+            type: DELETE_POKEMON,
             payload: error.response.data
          }));
    };
@@ -142,6 +141,12 @@ export function emptyPokemon () {
 export function emptyCard (payload) {
    return {
       type: EMPTY_CARD,
+      payload
+   };
+};
+export function lesserErrorHandler (payload) {
+   return {
+      type: LESSER_ERROR,
       payload
    };
 };

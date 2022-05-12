@@ -13,7 +13,9 @@ const PrevEntrance = ({id}) => {
    const [ loading, setLoading ] = useState(true);
    
    useEffect(() => {
-      dispatch(getPrev(id));
+      if (!Number.isNaN(id)) {
+         dispatch(getPrev(id));
+      }
       return () => setLoading(true);
       // eslint-disable-next-line
    }, [id]);

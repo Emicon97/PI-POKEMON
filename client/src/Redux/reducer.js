@@ -90,6 +90,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
          return {
             ...state,
             pokemon: {},
+            prevPokemon: {},
+            nextPokemon: {},
             loading: true,
             page: payload
          };

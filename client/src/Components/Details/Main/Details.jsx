@@ -19,7 +19,9 @@ const Details = props => {
    const page = useSelector(state => state.page);
    
    useEffect(() => {
-      dispatch(getPokeData(props.pokemon.match.params.pokemonId));
+      if (!Number.isNaN(props.pokemon.match.params.pokemonId)) {
+         dispatch(getPokeData(props.pokemon.match.params.pokemonId));
+      }
       return () => {
          dispatch(emptyCard(page));
          setLoading(true)
@@ -51,6 +53,7 @@ const Details = props => {
             <Entrance>
                {loading ? <Name>Identificando Pokémon...</Name> :
                   <>
+                  <Text isId={true}>{id}</Text>
                   <Name>{name && name[0].toUpperCase() + name.slice(1)}</Name>
                   {sprite ? <Img><img src={sprite} alt='' width='300em' height='300em'/></Img> :
                      <ImgError>Este Fakemon no tiene imagen</ImgError>

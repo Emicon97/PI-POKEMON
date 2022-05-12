@@ -35,11 +35,24 @@ const Entrance = styled.div`
       margin-right: 4rem;
       padding: 2rem;
    };
+
+   &:hover #delete {
+      transition: 0.6s ease-out;
+
+      width: 3rem;
+      height: 3rem;
+      margin-top: .1rem;
+      margin-right: -.3rem;
+      font-size: larger;
+   }
+
    a:active {
       text-decoration: none;
    };
    
-   transition: 1.5s ease-out;
+   ${props => props.hasErrors ? 'display: flex; align-items: center;' : null }
+
+   transition: 1.5s ease-in;
    transition-delay: 200ms;
 `;
 const LinkBox = styled.div`
@@ -49,11 +62,41 @@ const LinkBox = styled.div`
    align-items: center;
    justify-content: center;
 `;
+const Delete = styled.button`
+   width: 2rem;
+   height: 2rem;
+
+   border-radius: 100%;
+   
+   margin-top: .5rem;
+   margin-bottom: -2.5rem;
+   margin-left: 12rem;
+
+   color: rgb(218, 49, 24);
+   font-weight: bolder;
+   text-shadow: 1px 0 0 #000, -1px 0 0 #000,
+      0 1px 0 #000, 0 -1px 0 #000, 1px 1px 0 #000, -1px -1px 0 #000,
+      -1px 1px 0 #000, 1px -1px 0 #000;
+
+   background-color: rgb(255, 247, 214);
+   border: 3px solid black;
+
+   &:hover {
+      transition: .2s;
+      color: #ffd000;
+      background-color: #ff0000;
+   };
+
+   transition: 1.5s ease-out;
+
+   cursor: pointer;
+`;
 const Err = styled.div`
    width: 10rem;
    margin-left: 2.5rem;
+   
 
    cursor: pointer;
 `;
 
-export { Entrance, LinkBox, Err };
+export { Entrance, LinkBox, Delete, Err };

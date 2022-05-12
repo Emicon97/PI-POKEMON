@@ -27,7 +27,8 @@ async function getApiPokemon (value, isCb) {
             };
          }
       })
-      .catch(() => {
+      .catch((err) => {
+         console.log(err.message)
          if (isCb) throw new Error (`¡Vaya! ¡Parece que tu Pokédex está averiada!`);
          throw new Error (`¡Ese Pokémon no existe! Pero podés crearlo como Fakemon aquí.`);
       });

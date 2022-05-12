@@ -50,11 +50,9 @@ router.post('/', async (req, res) => {
    }
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
    try {
-      var { id } = req.body;
-      console.log('hola')
-      console.log(id)
+      var { id } = req.params;
       let deletionMessage = await deleteFunction(id);
       res.json(deletionMessage);
    } catch (err) {

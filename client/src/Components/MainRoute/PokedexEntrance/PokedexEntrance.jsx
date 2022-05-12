@@ -24,7 +24,7 @@ const PokedexEntrance = ({ sprite, name, types, id }) => {
       e.preventDefault();
 
       setCardId(e.target.value);
-      dispatch(deleteFakemon(e.target.value));
+      dispatch(deleteFakemon('Fakemon 1'));
       
       dispatch(getPokedex());
    };

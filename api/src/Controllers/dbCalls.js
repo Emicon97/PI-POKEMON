@@ -52,8 +52,8 @@ async function postPokemon (name, hp, attack, defense, speed, height, weight, ty
    let pokemon = await checkPokemon(name);
    if (pokemon) throw new Error ('¡Ese es un Pokémon!');
    
-   let id = await Pokemon.count();
-   id++;
+   let id = await idChecker();
+
    let [ fakemon, created ] = await Pokemon.findOrCreate({
       where:{name},
       defaults:{
@@ -71,6 +71,16 @@ async function postPokemon (name, hp, attack, defense, speed, height, weight, ty
    
    if (types) fakemon = await typeManager(fakemon, types);
    return '¡¡¡Felicitaciones!!! Tu Pokémon fue creado con éxito.';
+}
+
+async function idChecker (id) {
+   if (!id) {
+      var id = await Pokemon.count();
+      id++;
+   }
+   let checker = await Pokemon.findByPk(`Fakemon ${id}`)
+   if (checker) return idChecker(id);
+   else return id;
 }
 
 function idFixer (id) {

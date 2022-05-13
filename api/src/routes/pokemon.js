@@ -53,6 +53,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
    try {
       var { id } = req.params;
+      return res.json(id)
       console.log('esta es la id: ' + id)
       let deletionMessage = await deleteFunction(id);
       res.json(deletionMessage);

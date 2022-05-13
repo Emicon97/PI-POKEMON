@@ -73,6 +73,7 @@ export function postFakemon (payload) {
    };
 };
 export function deleteFakemon (id) {
+   console.log(id)
    id = JSON.stringify(id);
    return async dispatch => {
       return await axios.delete(`https://pokemonshowroom.herokuapp.com/pokemons/${id}`)

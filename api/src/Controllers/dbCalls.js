@@ -80,7 +80,7 @@ async function idChecker (id) {
    }
    let checker = await Pokemon.findByPk(`Fakemon ${id}`)
    if (checker) return idChecker(id);
-   else return id;
+   else return id++;
 }
 
 function idFixer (id) {

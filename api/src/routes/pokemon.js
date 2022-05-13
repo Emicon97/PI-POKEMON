@@ -8,8 +8,8 @@ router.use(json());
 router.get('/', async (req, res) => {
    try {
       let { name } = req.query;
-      name = JSON.stringify(name);
       console.log('el name es aaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      name = JSON.stringify(name);
       if (name) {
          name = name.toLowerCase().trim();
          let data = await getDbPokemon(name, 'name');
@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
 router.get('/:idPokemon', async (req, res) => {
    try {
       let { idPokemon } = req.params;
-      console.log('HOLA')
       let pokeData;
       idPokemon.includes('Fakemon') ? 
       pokeData = await getDbPokemon(idPokemon, 'id') : 

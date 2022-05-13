@@ -93,6 +93,7 @@ function idFixer (id) {
 
 async function deleteFunction (id) {
    if (id) {
+      idFixer(id);
       var deleted = await Pokemon.destroy({where: {id}})
    }
    if (deleted) return 'Este Fakemon fue borrado exitosamente.';

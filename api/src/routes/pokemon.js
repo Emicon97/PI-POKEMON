@@ -43,6 +43,7 @@ router.get('/:idPokemon', async (req, res) => {
 router.post('/', async (req, res) => {
    try {
       let { name, hp, attack, defense, speed, height, weight, types, sprite } = req.body;
+      console.log('ESTE ES EL NAME ' + name)
       let message = await postPokemon(name, hp, attack, defense, speed, height, weight, types, sprite);
       res.status(201).json(message);
    } catch (err) {

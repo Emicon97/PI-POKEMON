@@ -8,8 +8,8 @@ router.use(json());
 router.get('/', async (req, res) => {
    try {
       let { name } = req.query;
-      console.log('el name es aaaaaaaaaaaaaaaaaaaaaaaaaaa')
       name = JSON.stringify(name);
+      console.log(name)
       if (name) {
          name = name.toLowerCase().trim();
          let data = await getDbPokemon(name, 'name');

@@ -156,7 +156,7 @@ const PokeButton = styled.button`
   0 2px 0 #000, 0 -2px 0 #000, 2px 2px 0 #000,
   -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
   -webkit-text-fill-color: white;
-  overflow: hidden;
+  flex-wrap: nowrap;
   
   background: linear-gradient(180deg, rgb(239, 21, 21) 50%, white 50%);
   

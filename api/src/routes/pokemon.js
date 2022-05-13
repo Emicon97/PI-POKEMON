@@ -8,7 +8,6 @@ router.use(json());
 router.get('/', async (req, res) => {
    try {
       let { name } = req.query;
-      console.log(name)
       if (name) {
          name = name.toLowerCase().trim();
          let data = await getDbPokemon(name, 'name');
@@ -53,7 +52,7 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
    try {
-      var { id } = req.body;
+      var { id } = req.params;
       let deletionMessage = await deleteFunction(id);
       res.json(deletionMessage);
    } catch (err) {

@@ -48,7 +48,7 @@ export function getTypes () {
 export function searchByName (name) {
    name = JSON.stringify(name);
    return async dispatch => {
-      return await axios.get(`https://pokemonshowroom.herokuapp.com/pokemons/?name=${name}/`)
+      return await axios.get(`https://pokemonshowroom.herokuapp.com/pokemons/?name=${name}`)
          .then (response => dispatch({
             type: GET_POKEMON,
             payload: response.data
@@ -61,7 +61,7 @@ export function searchByName (name) {
 }
 export function postFakemon (payload) {
    return async dispatch => {
-      return await axios.post('https://pokemonshowroom.herokuapp.com/pokemons/', payload)
+      return await axios.post('https://pokemonshowroom.herokuapp.com/pokemons', payload)
       //return await axios.post(('http://localhost:3001/pokemons/', payload))
          .then (response => dispatch({
             type: POST_FAKEMON,
@@ -74,9 +74,8 @@ export function postFakemon (payload) {
    };
 };
 export function deleteFakemon (id) {
-   id = JSON.stringify(id);
    return async dispatch => {
-      return await axios.delete(`https://pokemonshowroom.herokuapp.com/pokemons/${id}/`)
+      return await axios.delete(`https://pokemonshowroom.herokuapp.com/pokemons/${id}`)
       //return await axios.delete(`http://localhost:3001/pokemons/${payload}`)
          .then (response => dispatch({
             type: DELETE_POKEMON,

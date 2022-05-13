@@ -31,6 +31,7 @@ router.get('/', async (req, res) => {
 router.get('/:idPokemon', async (req, res) => {
    try {
       let { idPokemon } = req.params;
+      console.log('HOLA')
       let pokeData;
       idPokemon.includes('Fakemon') ? 
       pokeData = await getDbPokemon(idPokemon, 'id') : 

@@ -56,6 +56,7 @@ router.delete('/', async (req, res) => {
       let deletionMessage = await deleteFunction(id);
       res.status(201).json(deletionMessage);
    } catch (err) {
+      console.log(err)
       res.status(418).json(err.message);
    }
 })

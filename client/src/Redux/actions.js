@@ -61,7 +61,7 @@ export function searchByName (name) {
 }
 export function postFakemon (payload) {
    return async dispatch => {
-      return await axios.post('https://pokemonshowroom.herokuapp.com/pokemons', payload)
+      return await axios.post('https://pokemonshowroom.herokuapp.com/pokemons/', payload)
       //return await axios.post(('http://localhost:3001/pokemons/', payload))
          .then (response => dispatch({
             type: POST_FAKEMON,
@@ -76,7 +76,7 @@ export function postFakemon (payload) {
 export function deleteFakemon (id) {
    id = JSON.stringify(id);
    return async dispatch => {
-      return await axios.delete(`https://pokemonshowroom.herokuapp.com/pokemons`, payload)
+      return await axios.delete(`https://pokemonshowroom.herokuapp.com/pokemons/${id}/`)
       //return await axios.delete(`http://localhost:3001/pokemons/${payload}`)
          .then (response => dispatch({
             type: DELETE_POKEMON,

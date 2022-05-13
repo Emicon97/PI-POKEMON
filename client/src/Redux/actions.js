@@ -46,7 +46,7 @@ export function getTypes () {
    };
 };
 export function searchByName (name) {
-   console.log(name)
+   console.log('hola')
    return async dispatch => {
       return await axios(`https://pokemonshowroom.herokuapp.com/?name=${name}`)
          .then (response => dispatch({

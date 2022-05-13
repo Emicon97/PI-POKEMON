@@ -97,8 +97,7 @@ async function deleteFunction (id) {
       var deleted = await Pokemon.destroy({where: {id}})
    }
    if (deleted) return 'Este Fakemon fue borrado exitosamente.';
-   //else throw new Error ('¡Ese es un Pokémon! Y no se puede borrar. NO. SE. PUEDE. BORRAR.');
-   else throw new Error (`Esta es la id que estás tratando de eliminar ${id}`);
+   else throw new Error ('¡Ese es un Pokémon! Y no se puede borrar. NO. SE. PUEDE. BORRAR.');
 }
 
 module.exports = { getDbPokemon, postPokemon, getDbDex, deleteFunction };

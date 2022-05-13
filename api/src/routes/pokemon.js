@@ -46,17 +46,18 @@ router.post('/', async (req, res) => {
       let message = await postPokemon(name, hp, attack, defense, speed, height, weight, types, sprite);
       res.status(201).json(message);
    } catch (err) {
-      console.log(err)
       res.status(409).json(err.message);
    }
 });
 
 router.delete('/:id', async (req, res) => {
    try {
-      var { id } = req.params;
+      var { id } = req.body;
+      console.log(id)
       let deletionMessage = await deleteFunction(id);
       res.json(deletionMessage);
    } catch (err) {
+      console.log(err)
       res.status(418).json(err.message);
    }
 })

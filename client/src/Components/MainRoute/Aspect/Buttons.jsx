@@ -149,6 +149,7 @@ const PokeButton = styled.button`
   width: 3rem;
   height: 3rem;
   padding-inline: 0 0;
+  font-size: 100%;
   
   outline: 2px solid black;
   border: 2px solid white;

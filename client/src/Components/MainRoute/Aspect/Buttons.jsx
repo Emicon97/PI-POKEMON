@@ -174,6 +174,7 @@ const PokeButton = styled.button`
     width: 2.6rem;
     height: 2.6rem;
     padding-inline: 0 1rem;
+    font-size: 80%;
   }
   
   transition: .2s;
@@ -181,7 +182,6 @@ const PokeButton = styled.button`
 
   margin-left: 1rem;
   overflow: hidden;
-  //position: fixed;
   
 
   cursor: pointer;

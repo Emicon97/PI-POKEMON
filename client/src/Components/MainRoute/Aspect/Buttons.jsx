@@ -157,7 +157,7 @@ const PokeButton = styled.button`
   -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
   -webkit-text-fill-color: white;
   
-  background: linear-gradient(180deg, rgb(239, 21, 21) 50%, white 50%);
+  background: linear-gradient(180deg, rgb(239, 21, 21) 50%, black 50%);
   
   &:hover {
     transition: .5s;
@@ -180,6 +180,7 @@ const PokeButton = styled.button`
   margin-left: 1rem;
   overflow: hidden;
   //position: fixed;
+  font-size: 100%;
 
   cursor: pointer;
 `;

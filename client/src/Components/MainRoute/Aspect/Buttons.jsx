@@ -149,7 +149,7 @@ const PokeButton = styled.button`
   width: 3rem;
   height: 3rem;
   padding-inline: 0 0;
-  font-size: 90%;
+  //font-size: 90%;
   
   outline: 2px solid black;
   border: 2px solid white;
@@ -158,7 +158,7 @@ const PokeButton = styled.button`
   -2px -2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000;
   -webkit-text-fill-color: white;
   
-  background: linear-gradient(180deg, rgb(239, 21, 21) 50%, black 50%);
+  background: linear-gradient(180deg, rgb(239, 21, 21) 50%, white 50%);
   
   &:hover {
     transition: .5s;
@@ -181,7 +181,7 @@ const PokeButton = styled.button`
   text-align: center;
 
   margin-left: 1rem;
-  overflow: hidden;
+  overflow-x: hidden;
 
   cursor: pointer;
 `;

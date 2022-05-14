@@ -180,7 +180,7 @@ const PokeButton = styled.button`
   margin-left: 1rem;
   overflow: hidden;
   //position: fixed;
-  font-size: 100%;
+  font-size: 90%;
 
   cursor: pointer;
 `;
